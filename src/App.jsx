@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import KeywordsStats from './charts/KeywordsStats';
 import { keywordsMovementData, keywordsStatsData, simpleTrafficImpressionData } from './utils/charts-data';
 import KeywordsMovement from './charts/KeywordsMovement';
-import MonthlyDataPagewise from './charts/MonthlyDataPageWise';
 import SimpleTrafficImpression from './charts/SimpleTrafficImpression';
+import MonthlyDataPagewise from './charts/MonthlyDataPagewise';
 
 function App() {
   const [showChart, setShowChart] = useState(false);
