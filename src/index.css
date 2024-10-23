@@ -13,3 +13,8 @@
   background-clip: text;
   text-fill-color: transparent;
 }
+
+.clip-torch {
+    clip-path: polygon(99% 4%, 95% 45%, 80% 42%, 95% 90%, 66% 69%, 49% 100%, 0 1%);
+  }
+  

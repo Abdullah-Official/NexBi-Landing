@@ -6,24 +6,27 @@ import StatisticsSection from "./components/StatisticsSection";
 
 function App() {
   return (
-    <div className=" bg-[#060809] min-h-screen overflow-hidden">
-      {/* Diagonal gradient */}
-      {/* <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div> */}
+    <div className="bg-[#060809] min-h-screen overflow-hidden relative">
+      {/* Light effect */}
+      <div className="fixed top-0 inset-0 pointer-events-none">
+  <div className="w-[40%] h-[399px] md:h-[80%] bg-gradient-to-bl from-[#ffffff] to-transparent opacity-[0.011] clip-torch" />
+</div>
 
       <div className="relative w-full max-w-5xl mx-auto py-4">
-      <Header />
-      <div className="mt-20">
-      <HeroSection />
-      </div>
-      {/* <ReviewSection /> */}
-      {/* <CardSection /> */}
-      {/* <StatisticsSection /> */}
+        <Header />
+        <div className="mt-20 md:mt-32 w-[95%] sm:w-full mx-auto">
+          <HeroSection />
+        </div>
+        {/* <ReviewSection /> */}
+        {/* <CardSection /> */}
+        {/* <StatisticsSection /> */}
       </div>
     </div>
   );
 }
 
 export default App;
+
 
 
 
