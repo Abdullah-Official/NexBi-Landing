@@ -35,49 +35,61 @@ const KeywordsStats = ({ chartData }) => {
 
   const data = {
     labels: sortedData.labels,
+    pointStyle: "circle",
     datasets: [
       {
         label: 'Improved',
         data: sortedData.improved,
-        backgroundColor: 'rgba(0, 200, 83, 0.6)',  // Bright green
-        borderColor: 'rgba(0, 200, 83, 1)',        // Darker green for border
-        borderWidth: 2,
+        backgroundColor: '#23B649',  // Bright green
+        // borderColor: '#23B649',        // Darker green for border
       },
       {
         label: 'Declined',
         data: sortedData.declined,
-        backgroundColor: 'rgba(33, 150, 243, 0.6)',  // Bright blue
-        borderColor: 'rgba(33, 150, 243, 1)',        // Darker blue for border
-        borderWidth: 2,
+        backgroundColor: '#DF9B34',  // Bright blue
+        // borderColor: 'rgba(33, 150, 243, 1)',        // Darker blue for border
       },
       {
         label: 'Lost',
         data: sortedData.lost,
-        backgroundColor: 'rgba(244, 67, 54, 0.6)',   // Bright red
-        borderColor: 'rgba(244, 67, 54, 1)',         // Darker red for border
-        borderWidth: 2,
+        backgroundColor: '#CD3749',   // Bright red
+        // borderColor: 'rgba(244, 67, 54, 1)',         // Darker red for border
       },
     ],
   };
 
   const options = {
     responsive: true,
+    barPercentage: 0.8,
     plugins: {
-      title: {
-        display: true,
-        text: 'Keywords Ranking Stats',
+      legend: {
+        labels: {
+          usePointStyle: true, // This makes the legend icon a circle
+          pointStyle: 'circle', // Specify circle point style explicitly
+        },
       },
     },
+   
     maintainAspectRatio: false, // Allows for height and width adjustment
     scales: {
         y: {
           beginAtZero: true,
+          position:"right",
+          border:{dash: [4, 4]},
+          grid:{
+            display:true,
+            color:"gray",
+          }
+        },
+        x: {
+          barPercentage: 0.5, // Controls the width of the bars (0.5 = 50% width of the category)
+          categoryPercentage: 0.5, // Controls the width of the category that bars take up (0.5 = 50% of the total category width)
         },
       },
   };
 
   return (
-    <div style={{ width: '400px', height: '300px' }}>
+    <div className='w-full h-[350px] md:w-full md:h-[400px]'>
       <Bar data={data} options={options} />
     </div>
   );

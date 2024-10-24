@@ -1,17 +1,45 @@
 const CardSection = () => {
-    return (
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 max-w-5xl mx-auto">
-        <div className="bg-gray-800 p-6 rounded-lg text-white">
-          <h3 className="text-xl font-bold">Top Traffic Drivers 🚀</h3>
-          <p>Top-ranking pages like the Patchstack homepage...</p>
+  return (
+    <section className="grid grid-cols-1 md:grid-cols-2 gap-6  mt-6 max-w-5xl mx-auto">
+      <div className="py-[0.3px] backdrop-blur-[100px] rounded-[36px] shadow-md border border-transparent bg-gradient-to-br from-[rgba(255,255,255,0.1)] via-[rgba(255,255,255,0.05)] to-[rgba(255,255,255,0.03)]">
+        <div
+          style={{
+            background:
+              "linear-gradient(90.29deg, rgba(13, 15, 18, 0.5) 33.92%, rgba(11, 12, 15, 0.5) 88.83%)",
+          }}
+          className="rounded-[36px] h-full !bg-[#060809] p-6 border-2 border-transparent opacity-95  bg-clip-padding"
+        >
+          <h3 className="text-[22px] font-semibold text-white mb-4">
+            Top Traffic Drivers 🚀
+          </h3>
+          <p className="text-[16px] opacity-75 text-[#FFFFFFBF] font-[400]">
+            Top-ranking pages like the Patchstack homepage and WordPress
+            Vulnerability Database are driving substantial traffic, highlighting
+            strong brand recognition and interest in niche topics.
+          </p>
         </div>
-        <div className="bg-gray-800 p-6 rounded-lg text-white">
-          <h3 className="text-xl font-bold">Optimization Opportunities 🚀</h3>
-          <p>The lack of backlink data for these pages and the mismatch...</p>
+      </div>
+      <div className="py-[0.3px] backdrop-blur-[100px] rounded-[36px] shadow-md border border-transparent bg-gradient-to-br from-[rgba(255,255,255,0.1)] via-[rgba(255,255,255,0.05)] to-[rgba(255,255,255,0.03)]">
+        <div
+          style={{
+            background:
+              "linear-gradient(90.29deg, rgba(13, 15, 18, 0.5) 33.92%, rgba(11, 12, 15, 0.5) 88.83%)",
+          }}
+          className="rounded-[36px] !bg-[#060809] p-6 border-2 border-transparent opacity-95  bg-clip-padding"
+        >
+          <h3 className="text-[22px] font-semibold text-white mb-4">
+            Optimization Opportunities 🚀
+          </h3>
+          <p className="text-[16px] opacity-75 text-[#FFFFFFBF] font-[400]">
+            However, the lack of backlink data for these pages and the mismatch
+            between high search volumes and actual traffic suggest opportunities
+            for content optimization and enhanced backlink strategies to better
+            capture search intent and improve user engagement.
+          </p>
         </div>
-      </section>
-    );
-  };
-  
-  export default CardSection;
-  
+      </div>
+    </section>
+  );
+};
+
+export default CardSection;

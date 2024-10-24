@@ -1,11 +1,35 @@
+import { useState, useEffect } from "react";
 import NexbiLogo from "../assets/nexbi_logo.png";
 
 const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // If the scroll position is greater than 0, we consider it scrolled
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    // Attach the scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <header
-      className="fixed top-6 left-1/2 transform -translate-x-1/2 max-w-4xl w-full flex justify-between items-center px-4 py-2.5 text-white rounded-full border border-[#FFFFFF08]"
+      className="fixed !z-50 top-6 left-1/2 transform -translate-x-1/2 max-w-4xl w-full flex justify-between items-center px-4 py-2.5 text-white rounded-full border border-[#FFFFFF08] transition-all duration-300 ease-in-out"
       style={{
-        background: "linear-gradient(90.29deg, rgba(9, 10, 12, 0.02) 11.9%, rgba(7, 7, 9, 0.02) 76.85%)",
+        background: isScrolled
+          ? "#060809" // Hex background when scrolled
+          : "linear-gradient(90.29deg, rgba(9, 10, 12, 0.02) 11.9%, rgba(7, 7, 9, 0.02) 76.85%)", // Linear gradient when at the top
       }}
     >
       <img src={NexbiLogo} alt="nexbi_logo" className="object-contain" />

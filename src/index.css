@@ -11,10 +11,18 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-fill-color: transparent;
 }
 
 .clip-torch {
     clip-path: polygon(99% 4%, 95% 45%, 80% 42%, 95% 90%, 66% 69%, 49% 100%, 0 1%);
-  }
+}
+
+.review_class{
+  background: linear-gradient(white, white) padding-box,
+  linear-gradient(to right, darkblue, darkorchid) border-box;
+border-radius: 50em;
+border: 4px solid transparent;
+
+
+}
   

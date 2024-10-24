@@ -9,32 +9,23 @@ function App() {
     <div className="bg-[#060809] min-h-screen overflow-hidden relative">
       {/* Light effect */}
       <div className="fixed top-0 inset-0 pointer-events-none">
-  <div className="w-[40%] h-[399px] md:h-[80%] bg-gradient-to-bl from-[#ffffff] to-transparent opacity-[0.011] clip-torch" />
-</div>
+        <div className="w-[40%] h-[399px] md:h-[80%] bg-gradient-to-bl from-[#ffffff] to-transparent opacity-[0.011] clip-torch" />
+      </div>
 
       <div className="relative w-full max-w-5xl mx-auto py-4">
         <Header />
-        <div className="mt-20 md:mt-32 w-[95%] sm:w-full mx-auto">
+        <div className="mt-20 md:mt-32 px-5 w-[95%] sm:w-full mx-auto">
           <HeroSection />
+          <ReviewSection />
+          <CardSection />
+          <StatisticsSection />
         </div>
-        {/* <ReviewSection /> */}
-        {/* <CardSection /> */}
-        {/* <StatisticsSection /> */}
       </div>
     </div>
   );
 }
 
 export default App;
-
-
-
-
-
-
-
-
-
 
 // import React, { useState } from 'react';
 // import KeywordsStats from './charts/KeywordsStats';
