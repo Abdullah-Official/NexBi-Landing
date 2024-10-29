@@ -1,3 +1,4 @@
+import ActionableSteps from "./components/ActionableSteps";
 import CardSection from "./components/CardSection";
 import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
@@ -14,11 +15,14 @@ function App() {
 
       <div className="relative w-full max-w-5xl mx-auto py-4">
         <Header />
-        <div className="mt-20 md:mt-32 px-5 w-[95%] sm:w-full mx-auto">
+        <div className="mt-20 md:mt-32 space-y-6 px-5 w-[95%] sm:w-full mx-auto">
           <HeroSection />
           <ReviewSection />
           <CardSection />
+          <ActionableSteps />
+          <div className="!mt-20">
           <StatisticsSection />
+          </div>
         </div>
       </div>
     </div>

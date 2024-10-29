@@ -1,11 +1,10 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -15,69 +14,79 @@ import {
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
 );
 
-// LineChartComponent
+// BarChartComponent
 const KeywordsMovement = ({ chartData }) => {
   // Prepare data for the chart
   const sortedData = Object.keys(chartData)
     .sort() // Sorting the keys
     .reduce((acc, key) => {
-      // Only add data where traffic and impressions exist
-      if (chartData[key].traffic && chartData[key].impressions) {
-        acc.labels.push(key);
-        acc.traffic.push(chartData[key]["traffic"]);
-        acc.impressions.push(chartData[key]["impressions"]);
-      }
+      acc.labels.push(key);
+      acc.firstPage.push(chartData[key]["num_keywords_ranking_on_first_page"] || 0);
+      acc.secondThirdPage.push(chartData[key]["num_keywords_ranking_on_second_and_third_page"] || 0);
+      acc.fourthTenthPage.push(chartData[key]["num_keywords_ranking_on_fourth_till_10_page"] || 0);
       return acc;
-    }, { labels: [], traffic: [], impressions: [] });
+    }, { labels: [], firstPage: [], secondThirdPage: [], fourthTenthPage: [] });
 
   const data = {
     labels: sortedData.labels,
     datasets: [
       {
-        label: 'Traffic',
-        data: sortedData.traffic,
-        borderColor: 'rgba(0, 200, 83, 1)',  // Green for traffic
-        backgroundColor: 'rgba(0, 200, 83, 0.2)', // Light green background
-        borderWidth: 2,
-        fill: true,
+        label: 'First Page',
+        data: sortedData.firstPage,
+        backgroundColor: '#23B649', 
       },
       {
-        label: 'Impressions',
-        data: sortedData.impressions,
-        borderColor: 'rgba(33, 150, 243, 1)',  // Blue for impressions
-        backgroundColor: 'rgba(33, 150, 243, 0.2)', // Light blue background
-        borderWidth: 2,
-        fill: true,
+        label: 'Second & Third Page',
+        data: sortedData.secondThirdPage,
+        backgroundColor: '#DF9B34',
+      },
+      {
+        label: 'Fourth till 10th Page',
+        data: sortedData.fourthTenthPage,
+        backgroundColor: '#CD3749',
       },
     ],
   };
 
   const options = {
     responsive: true,
+    barPercentage: 0.8,
     plugins: {
-      title: {
-        display: true,
-        text: 'Keywords Movement',
+      legend: {
+        labels: {
+          usePointStyle: true, // This makes the legend icon a circle
+          pointStyle: 'circle', // Specify circle point style explicitly
+        },
       },
     },
+   
     maintainAspectRatio: false, // Allows for height and width adjustment
     scales: {
         y: {
           beginAtZero: true,
+          position:"right",
+          border:{dash: [4, 4]},
+          grid:{
+            display:true,
+            color:"gray",
+          }
+        },
+        x: {
+          barPercentage: 0.5, // Controls the width of the bars (0.5 = 50% width of the category)
+          categoryPercentage: 0.5, // Controls the width of the category that bars take up (0.5 = 50% of the total category width)
         },
       },
   };
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <Line data={data} options={options} />
+    <div className='w-full h-[300px]'>
+      <Bar data={data} options={options} />
     </div>
   );
 };

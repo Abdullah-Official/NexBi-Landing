@@ -1,10 +1,11 @@
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
@@ -14,46 +15,46 @@ import {
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend
 );
 
-// ChartComponent
-const KeywordsStats = ({ chartData }) => {
+// LineChartComponent
+const KeywordsTraffic = ({ chartData }) => {
   // Prepare data for the chart
   const sortedData = Object.keys(chartData)
     .sort() // Sorting the keys
     .reduce((acc, key) => {
-      acc.labels.push(key);
-      acc.improved.push(chartData[key]["num_keywords_ranking_improved"]);
-      acc.declined.push(chartData[key]["num_keywords_ranking_declined"]);
-      acc.lost.push(chartData[key]["num_keywords_lost_ranking"]);
+      // Only add data where traffic and impressions exist
+      if (chartData[key].traffic && chartData[key].impressions) {
+        acc.labels.push(key);
+        acc.traffic.push(chartData[key]["traffic"]);
+        acc.impressions.push(chartData[key]["impressions"]);
+      }
       return acc;
-    }, { labels: [], improved: [], declined: [], lost: [] });
+    }, { labels: [], traffic: [], impressions: [] });
 
   const data = {
     labels: sortedData.labels,
-    pointStyle: "circle",
     datasets: [
       {
-        label: 'Improved',
-        data: sortedData.improved,
-        backgroundColor: '#23B649',  // Bright green
-        // borderColor: '#23B649',        // Darker green for border
+        label: 'Traffic',
+        data: sortedData.traffic,
+        borderColor: '#1B76DE',  // Green for traffic
+        backgroundColor: '#1B76DE', // Light green background
+        borderWidth: 1,
+        fill: true,
       },
       {
-        label: 'Declined',
-        data: sortedData.declined,
-        backgroundColor: '#DF9B34',  // Bright blue
-        // borderColor: 'rgba(33, 150, 243, 1)',        // Darker blue for border
-      },
-      {
-        label: 'Lost',
-        data: sortedData.lost,
-        backgroundColor: '#CD3749',   // Bright red
-        // borderColor: 'rgba(244, 67, 54, 1)',         // Darker red for border
+        label: 'Impressions',
+        data: sortedData.impressions,
+        borderColor: '#DE971B',  // Blue for impressions
+        backgroundColor: '#DE971B', // Light blue background
+        borderWidth: 1,
+        fill: true,
       },
     ],
   };
@@ -66,6 +67,7 @@ const KeywordsStats = ({ chartData }) => {
         labels: {
           usePointStyle: true, // This makes the legend icon a circle
           pointStyle: 'circle', // Specify circle point style explicitly
+          pointWidth:"1px"
         },
       },
     },
@@ -88,11 +90,12 @@ const KeywordsStats = ({ chartData }) => {
       },
   };
 
+
   return (
-    <div className='w-full h-[300px] md:w-full'>
-      <Bar data={data} options={options} />
+    <div className='w-full h-[300px]'>
+      <Line data={data} options={options} />
     </div>
   );
 };
 
-export default KeywordsStats;
+export default KeywordsTraffic;
