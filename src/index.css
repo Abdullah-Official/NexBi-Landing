@@ -6,6 +6,18 @@
   font-family: 'Manrope' !important;
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+  background-color: none;
+  cursor: pointer;
+}
+
+/* Set thumb color (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb  {
+  background-color: #161618B2;
+  border-radius: 2px;
+}
+
 .header_gradient{
     background: linear-gradient(90.29deg, rgba(9, 10, 12, 0.02) 11.9%, rgba(7, 7, 9, 0.02) 76.85%) !important;
 }

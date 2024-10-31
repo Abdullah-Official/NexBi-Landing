@@ -37,17 +37,17 @@ const KeywordsMovement = ({ chartData }) => {
     labels: sortedData.labels,
     datasets: [
       {
-        label: 'First Page',
+        label: '1st page',
         data: sortedData.firstPage,
         backgroundColor: '#23B649', 
       },
       {
-        label: 'Second & Third Page',
+        label: '2nd - 3rd page',
         data: sortedData.secondThirdPage,
         backgroundColor: '#DF9B34',
       },
       {
-        label: 'Fourth till 10th Page',
+        label: '4th - 10th page',
         data: sortedData.fourthTenthPage,
         backgroundColor: '#CD3749',
       },
@@ -85,7 +85,7 @@ const KeywordsMovement = ({ chartData }) => {
   };
 
   return (
-    <div className='w-full h-[300px]'>
+    <div className='w-full h-[300px] md:h-[345px]'>
       <Bar data={data} options={options} />
     </div>
   );

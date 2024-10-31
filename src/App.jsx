@@ -4,13 +4,15 @@ import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
 import ReviewSection from "./components/ReviewSection";
 import StatisticsSection from "./components/StatisticsSection";
+import BgSvg from "./assets/bg-svg.svg"
 
 function App() {
   return (
-    <div className="bg-[#060809] min-h-screen overflow-hidden relative">
+    <div className="bg-[#060809] min-h-screen overflow-hidden">
       {/* Light effect */}
-      <div className="fixed top-0 inset-0 pointer-events-none">
-        <div className="w-[40%] h-[399px] md:h-[80%] bg-gradient-to-bl from-[#ffffff] to-transparent opacity-[0.011] clip-torch" />
+      <div className="absolute left-0 top-0 inset-0 pointer-events-none">
+        {/* <div className="w-[40%] h-[399px] md:h-[80%] bg-gradient-to-bl from-[#ffffff] to-transparent opacity-[0.011] clip-torch" /> */}
+        <img src={BgSvg} className="object-contain bg-no-repeat opacity-[0.03] h-full" />
       </div>
 
       <div className="relative w-full max-w-5xl mx-auto py-4">
