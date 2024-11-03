@@ -5,6 +5,7 @@ import HeroSection from "./components/HeroSection";
 import ReviewSection from "./components/ReviewSection";
 import StatisticsSection from "./components/StatisticsSection";
 import BgSvg from "./assets/bg-svg.svg"
+import CompetitorInsightsCard from "./components/CompetitorInsightsCard";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <div className="!mt-20">
           <StatisticsSection />
           </div>
+          <CompetitorInsightsCard />
         </div>
       </div>
     </div>
