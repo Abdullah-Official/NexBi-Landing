@@ -5,6 +5,9 @@
 *{
   font-family: 'Manrope' !important;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 ::-webkit-scrollbar {
   width: 4px;

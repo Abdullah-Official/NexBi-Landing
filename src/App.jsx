@@ -6,6 +6,7 @@ import ReviewSection from "./components/ReviewSection";
 import StatisticsSection from "./components/StatisticsSection";
 import BgSvg from "./assets/bg-svg.svg"
 import CompetitorInsightsCard from "./components/CompetitorInsightsCard";
+import CtaCardsSection from "./components/CtaCardsSection";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <img src={BgSvg} className="object-contain bg-no-repeat opacity-[0.03] h-full" />
       </div>
 
-      <div className="relative w-full max-w-5xl mx-auto py-4">
+      <div className="relative w-full max-w-[66rem] mx-auto py-4">
         <Header />
         <div className="mt-20 md:mt-32 space-y-6 px-5 w-[95%] sm:w-full mx-auto">
           <HeroSection />
@@ -27,6 +28,12 @@ function App() {
           <StatisticsSection />
           </div>
           <CompetitorInsightsCard />
+          <div className="!my-20">
+          <CtaCardsSection />
+          <div>
+            samsasa
+          </div>
+          </div>
         </div>
       </div>
     </div>

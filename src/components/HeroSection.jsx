@@ -2,7 +2,7 @@ import { FaArrowRight } from "react-icons/fa";
 
 const HeroSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center text-center py-12 text-white">
+    <section id="hero" className="flex flex-col items-center justify-center text-center py-12 text-white">
       <h1 className="hero_heading py-4 text-3xl md:text-4xl lg:text-6xl font-bold mb-6 max-w-[49rem]">
         Turn your data into insights and opportunities
       </h1>
