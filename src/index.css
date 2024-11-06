@@ -13,6 +13,7 @@ html {
   width: 4px;
   background-color: none;
   cursor: pointer;
+  height: 4px;
 }
 
 /* Set thumb color (the draggable part of the scrollbar) */

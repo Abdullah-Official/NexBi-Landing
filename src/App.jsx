@@ -10,8 +10,18 @@ import CtaCardsSection from "./components/CtaCardsSection";
 import ParagraphSection from "./components/ParagraphSection";
 import CommunityCta from "./components/CommunityCta";
 import HowItWorks from "./components/HowItWorks";
+import { useEffect, useState } from "react";
+import { businessData } from "./utils/business-data";
 
 function App() {
+
+  const [businessResponse, setBusinessResponse] = useState()
+
+  useEffect(() => {
+    setBusinessResponse(businessData);
+    console.log({businessResponse})
+  },[])
+
   return (
     <div className="bg-[#060809] min-h-screen overflow-hidden">
       {/* Light effect */}
@@ -43,11 +53,18 @@ function App() {
               ></iframe>
             </div>
           </div>
-          <ReviewSection />
-          <CardSection />
-          <ActionableSteps />
+          <ReviewSection title={businessResponse?.business_insights?.title} summary={businessResponse?.business_insights?.insights_data?.overall_summary} />
+          <CardSection positives={businessResponse?.business_insights?.insights_data?.positives} opportunities={businessResponse?.business_insights?.insights_data?.opportunities} />
+          <ActionableSteps actionableTasks={businessData?.business_insights?.actionable_tasks} />
           <div className="!mt-20">
-            <StatisticsSection />
+            <StatisticsSection data={{
+              trafficImpressionsData: businessResponse?.traffic_impressions,
+              keywordsRankingStatsData: businessResponse?.keywords_ranking_stats,
+              keywordsMovementStatsData: businessResponse?.keywords_movement_stats,
+              topRankedKeywords: businessResponse?.top_ranked_keywords,
+              topPageKeywords: businessResponse?.top_pages_by_keywords,
+              topPageTraffic: businessResponse?.top_pages_by_traffic
+            }} />
           </div>
           <CompetitorInsightsCard />
           <div className="flex justify-center items-center !my-10 md:!my-20 ">

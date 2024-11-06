@@ -25,7 +25,8 @@ ChartJS.register(
 // LineChartComponent
 const KeywordsTraffic = ({ chartData }) => {
   // Prepare data for the chart
-  const sortedData = Object.keys(chartData)
+  if(!chartData) return;
+  const sortedData = Object?.keys(chartData)
     .sort() // Sorting the keys
     .reduce((acc, key) => {
       // Only add data where traffic and impressions exist

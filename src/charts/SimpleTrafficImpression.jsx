@@ -25,7 +25,8 @@ ChartJS.register(
 // LineChartComponent
 const SimpleTrafficImpression = ({ chartData }) => {
   // Prepare data for the chart
-  const sortedData = Object.keys(chartData)
+  if(!chartData) return;
+  const sortedData = Object?.keys(chartData)
     .sort() // Sorting the keys
     .reduce((acc, key) => {
       acc.labels.push(key);

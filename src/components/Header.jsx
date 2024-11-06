@@ -35,7 +35,7 @@ const Header = () => {
       <img src={NexbiLogo} alt="nexbi_logo" className="object-contain" />
       <nav className="space-x-12 items-center hidden md:flex">
         <a href="#" className="hover:text-gray-400">Home</a>
-        <a href="#" className="text-[#F7F8F8] opacity-[0.45]">How it works</a>
+        <a href="#how_it_works" className="text-[#F7F8F8] opacity-[0.45]">How it works</a>
         <a href="#" className="text-[#F7F8F8] opacity-[0.45]">Roadmap</a>
       </nav>
       <button className="bg-[#FFFFFF1A] text-md px-5 py-2.5 rounded-full">

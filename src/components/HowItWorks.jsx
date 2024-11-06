@@ -52,7 +52,7 @@ const HowItWorks = () => {
   };
 
   return (
-    <div className="space-y-10">
+    <div id="how_it_works" className="space-y-10">
       <div className="flex justify-center items-center flex-col gap-5">
       <h1 className="text-md md:text-2xl lg:text-3xl text-center text-white font-[600] ">
         How It Works

@@ -1,4 +1,4 @@
-const ShowPageSelector = ({ showRankingBy, setShowRankingBy }) => {
+const ShowPageSelector = ({ selectorType, setSelectorType }) => {
   return (
     <div className="py-[0.3px] backdrop-blur-[100px] rounded-[36px] shadow-md border border-transparent bg-gradient-to-br from-[rgba(255,255,255,0.1)] via-[rgba(255,255,255,0.05)] to-[rgba(255,255,255,0.03)]">
       <div
@@ -13,9 +13,9 @@ const ShowPageSelector = ({ showRankingBy, setShowRankingBy }) => {
         </h2>
         <div className="mt-5 space-y-4">
           <button
-            onClick={() => setShowRankingBy("keywords")}
+            onClick={() => setSelectorType("keywords")}
             className={`space-y-1 pl-3 py-3 rounded-xl w-full text-left ${
-              showRankingBy === "keywords" ? "bg-[#FFFFFF0F]" : ""
+              selectorType === "keywords" ? "bg-[#FFFFFF0F]" : ""
             } `}
           >
             <h4 className="text-[#FFFF] font-[500] text-md">Keywords</h4>
@@ -24,9 +24,9 @@ const ShowPageSelector = ({ showRankingBy, setShowRankingBy }) => {
             </p>
           </button>
           <button
-            onClick={() => setShowRankingBy("traffic")}
+            onClick={() => setSelectorType("traffic")}
             className={`space-y-1 pl-3 py-3 rounded-xl w-full text-left ${
-              showRankingBy === "traffic" ? "bg-[#FFFFFF0F]" : ""
+              selectorType === "traffic" ? "bg-[#FFFFFF0F]" : ""
             } `}
           >
             <h4 className="text-[#FFFF] font-[500] text-md">Traffic</h4>

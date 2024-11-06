@@ -1,4 +1,4 @@
-const ReviewSection = () => {
+const ReviewSection = ({title, summary}) => {
   return (
     <section className="text-center">
       <div className="p-[0px] backdrop-blur-[200px] rounded-[36px] shadow-md border border-transparent bg-gradient-to-r from-[#5CC3FF] via-[#9F31FF] to-[#FF5CD1]">
@@ -15,13 +15,10 @@ const ReviewSection = () => {
 
           {/* Text content */}
           <h3 className="text-[22px] font-[600] text-white mb-4">
-            SEO Performance Analysis & Growth Opportunities
+            {title || ""}
           </h3>
           <p className="text-[15px] mx-10 text-[#fff] font-light">
-            Over the past months, your business's SEO performance has
-            experienced a significant decline in traffic and impressions from
-            May to October 2024, correlating with a drop in keyword rankings and
-            increased competition.
+            {summary || ""}
           </p>
         </div>
       </div>
