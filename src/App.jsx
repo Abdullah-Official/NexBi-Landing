@@ -4,9 +4,12 @@ import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
 import ReviewSection from "./components/ReviewSection";
 import StatisticsSection from "./components/StatisticsSection";
-import BgSvg from "./assets/bg-svg.svg"
+import BgSvg from "./assets/bg-svg.svg";
 import CompetitorInsightsCard from "./components/CompetitorInsightsCard";
 import CtaCardsSection from "./components/CtaCardsSection";
+import ParagraphSection from "./components/ParagraphSection";
+import CommunityCta from "./components/CommunityCta";
+import HowItWorks from "./components/HowItWorks";
 
 function App() {
   return (
@@ -14,26 +17,47 @@ function App() {
       {/* Light effect */}
       <div className="absolute left-0 top-0 inset-0 pointer-events-none">
         {/* <div className="w-[40%] h-[399px] md:h-[80%] bg-gradient-to-bl from-[#ffffff] to-transparent opacity-[0.011] clip-torch" /> */}
-        <img src={BgSvg} className="object-contain bg-no-repeat opacity-[0.03] h-full" />
+        <img
+          src={BgSvg}
+          className="object-contain bg-no-repeat opacity-[0.03] h-full"
+        />
       </div>
 
-      <div className="relative w-full max-w-[66rem] mx-auto py-4">
+      <div className="relative w-full max-w-[66rem] mx-auto py-4 mb-20">
         <Header />
         <div className="mt-20 md:mt-32 space-y-6 px-5 w-[95%] sm:w-full mx-auto">
           <HeroSection />
+          <div style={{background: "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #060809 100%)"}} className="flex justify-center mb-10 md:!mb-16 !mt-2 bg-blue-300 items-center relative w-full">
+            <div 
+              style={{background: "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #060809 100%)"}}
+              className="absolute bottom-0 left-0 w-full !bg-red-400"
+            />
+            <div id="video" className="w-full h-[250px] sm:h-[380px] md:h-[549px]">
+              <iframe
+                width="100%"
+                height={"100%"}
+                src="https://www.youtube.com/embed/N45UC2WCwpk?si=YR79KtgPkyZK1nDE"
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
           <ReviewSection />
           <CardSection />
           <ActionableSteps />
           <div className="!mt-20">
-          <StatisticsSection />
+            <StatisticsSection />
           </div>
           <CompetitorInsightsCard />
+          <div className="flex justify-center items-center !my-10 md:!my-20 ">
+            <ParagraphSection />
+          </div>
           <div className="!my-20">
-          <CtaCardsSection />
-          <div>
-            samsasa
+            <CtaCardsSection />
           </div>
-          </div>
+          <HowItWorks />
+          <CommunityCta />
         </div>
       </div>
     </div>
@@ -41,49 +65,3 @@ function App() {
 }
 
 export default App;
-
-// import React, { useState } from 'react';
-// import KeywordsStats from './charts/KeywordsStats';
-// import { keywordsMovementData, keywordsStatsData, simpleTrafficImpressionData } from './utils/charts-data';
-// import KeywordsMovement from './charts/KeywordsMovement';
-// import SimpleTrafficImpression from './charts/SimpleTrafficImpression';
-// import MonthlyDataPagewise from './charts/MonthlyDataPagewise';
-
-// function App() {
-//   const [showChart, setShowChart] = useState(false);
-
-//   const handleGenerateCharts = () => {
-//     setShowChart(true);
-//   };
-
-//   return (
-//     <div style={{ padding: '20px' }}>
-//       <button onClick={handleGenerateCharts} style={{ padding: '10px 20px', fontSize: '16px' }}>Generate Charts</button>
-//       {showChart && (
-//         <div
-//           style={{
-//             gap: '20px', // Space between charts
-//             marginTop: '20px',
-//             display:"flex",
-//             flexWrap:'wrap',
-//           }}
-//         >
-//           <div className="chart-container">
-//             <KeywordsStats chartData={keywordsStatsData} />
-//           </div>
-//           <div className="chart-container">
-//             <KeywordsMovement chartData={keywordsMovementData} />
-//           </div>
-//           <div className="chart-container">
-//             <MonthlyDataPagewise chartData={keywordsMovementData} />
-//           </div>
-//           <div className="chart-container">
-//             <SimpleTrafficImpression chartData={simpleTrafficImpressionData} />
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default App;
