@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import NexbiLogo from "../assets/nexbi_logo.png";
 
-const Header = () => {
+const Header = ({handleWaitlistModal}) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Header = () => {
         <a href="#how_it_works" className="text-[#F7F8F8] opacity-[0.45]">How it works</a>
         <a href="#" className="text-[#F7F8F8] opacity-[0.45]">Roadmap</a>
       </nav>
-      <button className="bg-[#FFFFFF1A] text-md px-5 py-2.5 rounded-full">
+      <button onClick={handleWaitlistModal} className="bg-[#FFFFFF1A] text-md px-5 py-2.5 rounded-full">
         Join the waitlist
       </button>
     </header>

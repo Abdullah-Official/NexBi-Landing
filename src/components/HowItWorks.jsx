@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import Step1Img from "../assets/step1_img.png"
+import Step1Img from "../assets/step1_img.png";
 import { IoPlayOutline } from "react-icons/io5";
+import CustomModal from "./CustomModal";
 
 const steps = [
   {
@@ -23,6 +24,7 @@ const steps = [
 const HowItWorks = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [videoModal, setVideoModal] = useState(false);
 
   useEffect(() => {
     const intervalDuration = 3000; // 5 seconds total for each step
@@ -52,50 +54,86 @@ const HowItWorks = () => {
   };
 
   return (
-    <div id="how_it_works" className="space-y-10">
-      <div className="flex justify-center items-center flex-col gap-5">
-      <h1 className="text-md md:text-2xl lg:text-3xl text-center text-white font-[600] ">
-        How It Works
-      </h1>
-      <a href="#video" className="flex gap-2 items-center shadow-md border border-[#FFFFFF14] w-fit rounded-full px-4 py-2">
-        <IoPlayOutline color="#f1f1f1" size={17} />
-        <p className="text-[14px] text-[#f1f1f1] font-[500]">Watch Video</p>
-      </a>
-      </div>
-      <div className="flex flex-col md:flex-row justify-center items-start bg-[#060809] text-white">
-        {/* Left Side: Steps */}
-        <div className="w-full md:w-1/2 p-6">
-          {steps.map((step, index) => (
-            <div onClick={() => handleClickStep(index)} key={index} className="mb-10 cursor-pointer">
-              <h3
-                className={`text-lg text-[22px] duration-200 transition-all ${
-                  index === currentStep ? "text-white text-[20px]" : "text-white text-opacity-10"
-                }`}
+    <>
+      <div id="how_it_works" className="space-y-10">
+        <div className="flex justify-center items-center flex-col gap-5">
+          <h1 className="text-md md:text-2xl lg:text-3xl text-center text-white font-[600] ">
+            How It Works
+          </h1>
+          <button
+            onClick={() => setVideoModal(true)}
+            className="flex gap-2 items-center shadow-md border border-[#FFFFFF14] w-fit rounded-full px-4 py-2"
+          >
+            <IoPlayOutline color="#f1f1f1" size={17} />
+            <p className="text-[14px] text-[#f1f1f1] font-[500]">Watch Video</p>
+          </button>
+        </div>
+        <div className="flex flex-col md:flex-row justify-center items-start bg-[#060809] text-white">
+          {/* Left Side: Steps */}
+          <div className="w-full md:w-1/2 p-6">
+            {steps.map((step, index) => (
+              <div
+                onClick={() => handleClickStep(index)}
+                key={index}
+                className="mb-10 cursor-pointer"
               >
-                {step.title}
-              </h3>
-              {index === currentStep && (
-                <p className="text-xs mt-3 text-white text-opacity-40">{step.description}</p>
-              )}
-              {/* Progress Bar */}
-              <div className="relative mt-4 h-[0.8px] w-full rounded-full " style={{background: "linear-gradient(180deg, #141415 0%, #1D1F20 100%)"}}>
+                <h3
+                  className={`text-lg text-[22px] duration-200 transition-all ${
+                    index === currentStep
+                      ? "text-white text-[20px]"
+                      : "text-white text-opacity-10"
+                  }`}
+                >
+                  {step.title}
+                </h3>
+                {index === currentStep && (
+                  <p className="text-xs mt-3 text-white text-opacity-40">
+                    {step.description}
+                  </p>
+                )}
+                {/* Progress Bar */}
                 <div
-                  className="absolute h-[0.8px] rounded-full bg-green-500 transition-all duration-[50ms]"
+                  className="relative mt-4 h-[0.8px] w-full rounded-full "
                   style={{
-                    width: index === currentStep ? `${progress}%` : "0%",
+                    background:
+                      "linear-gradient(180deg, #141415 0%, #1D1F20 100%)",
                   }}
-                ></div>
+                >
+                  <div
+                    className="absolute h-[0.8px] rounded-full bg-green-500 transition-all duration-[50ms]"
+                    style={{
+                      width: index === currentStep ? `${progress}%` : "0%",
+                    }}
+                  ></div>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        {/* Right Side: Icons */}
-        <div className="flex-1 flex justify-center items-center">
-          <img alt="steps_illustration" src={Step1Img} className="object-contain" />
+          {/* Right Side: Icons */}
+          <div className="flex-1 flex justify-center items-center">
+            <img
+              alt="steps_illustration"
+              src={Step1Img}
+              className="object-contain"
+            />
+          </div>
         </div>
       </div>
-    </div>
+      <CustomModal onClose={() => setVideoModal(false)} open={videoModal}>
+        <div className="h-[300px]">
+          <iframe
+            className="!mt-10"
+            width="100%"
+            height={"100%"}
+            src="https://www.youtube.com/embed/N45UC2WCwpk?si=YR79KtgPkyZK1nDE"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </CustomModal>
+    </>
   );
 };
 
