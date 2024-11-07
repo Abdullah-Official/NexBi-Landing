@@ -3,7 +3,7 @@ import axios from 'axios';
 export const postBusinessData = async (body) => {
   try {
     const response = await axios.post(
-      '/business_data',
+      'https://nexbi-prototype-backend-v1-316384244630.europe-west2.run.app/business_data',
       body,
       {
         headers: {
