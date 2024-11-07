@@ -68,7 +68,8 @@ function App() {
             }}
             className="flex justify-center mb-10 md:!mb-16 !mt-2 bg-blue-300 items-center relative w-full"
           >
-          
+            
+          </div>
           {businessResponse ? (
             <>
               <ReviewSection
@@ -110,7 +111,7 @@ function App() {
               </div>
             </>
           ) : null}
-           <div
+          <div
               style={{
                 background:
                   "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #060809 100%)",
@@ -130,7 +131,6 @@ function App() {
                 allowfullscreen
               ></iframe>
             </div>
-          </div>
           <CompetitorInsightsCard />
           <ReviewSection
             title={competitorsData?.competitors_insights?.title}

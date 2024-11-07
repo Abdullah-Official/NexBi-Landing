@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "proxy": "https://nexbi-prototype-backend-v1-316384244630.europe-west2.run.app",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
