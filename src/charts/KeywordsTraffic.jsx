@@ -24,40 +24,44 @@ ChartJS.register(
 
 // LineChartComponent
 const KeywordsTraffic = ({ chartData }) => {
+  if (!chartData) return null;
+  const colors = [ "#1B76DE","#DE971B","#CD3749"]
+
+  // Get keys for dynamic labels
+  const firstKey = Object.keys(chartData)[0];
+  const dataKeys = chartData[firstKey] ? Object.keys(chartData[firstKey]) : [];
+
   // Prepare data for the chart
-  if(!chartData) return;
-  const sortedData = Object?.keys(chartData)
-    .sort() // Sorting the keys
-    .reduce((acc, key) => {
-      // Only add data where traffic and impressions exist
-      if (chartData[key].traffic && chartData[key].impressions) {
-        acc.labels.push(key);
-        acc.traffic.push(chartData[key]["traffic"]);
-        acc.impressions.push(chartData[key]["impressions"]);
+  const sortedData = Object.keys(chartData).reduce(
+    (acc, dateKey) => {
+      const dataObj = chartData[dateKey];
+      
+      // Ensure the date object contains all required keys
+      if (dataKeys.every(key => key in dataObj)) {
+        acc.labels.push(dateKey);
+        
+        dataKeys.forEach((key) => {
+          acc[key] = acc[key] || []; // Initialize array if not already
+          acc[key].push(dataObj[key]);
+        });
       }
       return acc;
-    }, { labels: [], traffic: [], impressions: [] });
+    },
+    { labels: [] }
+  );
+
+  const datasets = dataKeys.map((key, index) => ({
+    label: key.charAt(0).toUpperCase() + key.slice(1), // Capitalize label
+    data: sortedData[key],
+    borderColor: colors[index], // Different colors for each dataset
+    backgroundColor: colors[index],
+    borderWidth: 1,
+    fill: true,
+  }));
 
   const data = {
     labels: sortedData.labels,
-    datasets: [
-      {
-        label: 'Traffic',
-        data: sortedData.traffic,
-        borderColor: '#1B76DE',  // Green for traffic
-        backgroundColor: '#1B76DE', // Light green background
-        borderWidth: 1,
-        fill: true,
-      },
-      {
-        label: 'Impressions',
-        data: sortedData.impressions,
-        borderColor: '#DE971B',  // Blue for impressions
-        backgroundColor: '#DE971B', // Light blue background
-        borderWidth: 1,
-        fill: true,
-      },
-    ],
+    datasets: datasets,
   };
 
   const options = {
@@ -66,31 +70,29 @@ const KeywordsTraffic = ({ chartData }) => {
     plugins: {
       legend: {
         labels: {
-          usePointStyle: true, // This makes the legend icon a circle
-          pointStyle: 'circle', // Specify circle point style explicitly
-          pointWidth:"1px"
+          usePointStyle: true,
+          pointStyle: 'circle',
+          pointWidth: "1px"
         },
       },
     },
-   
-    maintainAspectRatio: false, // Allows for height and width adjustment
+    maintainAspectRatio: false,
     scales: {
-        y: {
-          beginAtZero: true,
-          position:"right",
-          border:{dash: [4, 4]},
-          grid:{
-            display:true,
-            color:"gray",
-          }
-        },
-        x: {
-          barPercentage: 0.5, // Controls the width of the bars (0.5 = 50% width of the category)
-          categoryPercentage: 0.5, // Controls the width of the category that bars take up (0.5 = 50% of the total category width)
-        },
+      y: {
+        beginAtZero: true,
+        position: "right",
+        border: { dash: [4, 4] },
+        grid: {
+          display: true,
+          color: "gray",
+        }
       },
+      x: {
+        barPercentage: 0.5,
+        categoryPercentage: 0.5,
+      },
+    },
   };
-
 
   return (
     <div className='w-full h-[300px]'>

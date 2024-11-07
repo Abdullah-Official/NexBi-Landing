@@ -6,26 +6,36 @@ import TopPageCard from "./TopPageCard";
 import TopRankedCard from "./TopRankedCard";
 import ShowPageSelector from "./ShowPageSelector";
 import { useState } from "react";
+import BacklinksBarChart from "./BacklinksBarChart";
 
 
-const StatisticsSection = ({data}) => {
-  const [selectorType, setSelectorType] = useState("traffic");
-  const {trafficImpressionsData, keywordsRankingStatsData, keywordsMovementStatsData, topRankedKeywords, topPageKeywords, topPageTraffic} = data
+const StatisticsSection = ({data, selectors}) => {
+  const [selectorType, setSelectorType] = useState(selectors[0] || "");
+  const {trafficImpressionsData, keywordsRankingStatsData, keywordsMovementStatsData, trustPilotStats, topRankedKeywords, topPageKeywords, topPageTraffic, topMentions,backlinksData} = data;
+
+  console.log({
+    mentionsData: topMentions?.competitors_mentions[0][selectorType],
+    selectorType,
+    topMentions
+  })
+
   return (
     <section className="space-y-7">
       <h1 className="text-lg md:text-2xl lg:text-3xl text-white text-center font-[600]">Key Statistics</h1>
       <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <div className="flex flex-col gap-4">
         <BarComponent heading={"Keywords Ranking"} chartData={keywordsRankingStatsData} ChartComponent={KeywordsStats} />
-        <TopPageCard selectorType={selectorType} data={{topPageKeywords, topPageTraffic}} />
+        <TopPageCard selectorType={selectorType} data={{topPageKeywords, topPageTraffic, topMentions: selectorType === "Business" ? topMentions?.business_mentions : topMentions?.competitors_mentions[0][selectorType] }} />
         </div>
         <div className="flex flex-col gap-4">
-         <ShowPageSelector selectorType={selectorType} setSelectorType={setSelectorType} />
-        <BarComponent heading={"Keywords Movement"} chartData={keywordsMovementStatsData} ChartComponent={KeywordsMovement} />
+         <ShowPageSelector selectors={selectors} selectorType={selectorType} setSelectorType={setSelectorType} />
+        {keywordsMovementStatsData && <BarComponent heading={"Keywords Movement"} chartData={keywordsMovementStatsData} ChartComponent={KeywordsMovement} />}
+        {backlinksData &&  <BacklinksBarChart data={backlinksData} />}
         </div>
         <div className="flex flex-col gap-4">
-        <TopRankedCard topRankedKeywords={topRankedKeywords} />
+        {topRankedKeywords && <TopRankedCard topRankedKeywords={topRankedKeywords} />}
         <BarComponent heading={"Keywords Traffic"} chartData={trafficImpressionsData} ChartComponent={KeywordsTraffic} />
+        <TopPageCard selectorType={selectorType} data={{trustPilotStats: selectorType === "Business" ? trustPilotStats?.business_rating : trustPilotStats?.competitors_rating[0][selectorType] }} />
         </div>
       </div>
     </section>

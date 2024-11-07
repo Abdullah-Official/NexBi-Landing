@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 
-const TopPageCard = ({data: pageData, selectorType}) => {
-  const {topPageTraffic, topPageKeywords} = pageData;
-  const [data, setData] = useState(topPageTraffic)
+const TopPageCard = ({ data: pageData, selectorType }) => {
+  const { topPageTraffic, topPageKeywords, topMentions, trustPilotStats } = pageData;
+  const [data, setData] = useState(["keywords", "traffic"].includes(selectorType) ? topPageTraffic : topMentions);
 
   useEffect(() => {
-    if(selectorType === "traffic"){
-      setData(topPageTraffic)
-    }else{
-      setData(topPageKeywords)
+    if (selectorType === "traffic") {
+      setData(topPageTraffic);
+    } else if (selectorType === "keywords") {
+      setData(topPageKeywords);
+    } else if(topMentions) {
+      setData(topMentions);
+    } else{
+      setData(trustPilotStats)
     }
-  },[selectorType, topPageTraffic, topPageKeywords])
-  
+  }, [selectorType, topPageTraffic, topPageKeywords, trustPilotStats]);
+
   const headers = data?.length > 0 ? Object.keys(data[0]) : [];
 
   return (
@@ -26,11 +30,11 @@ const TopPageCard = ({data: pageData, selectorType}) => {
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-[18px] text-[#fff] font-[550] truncate capitalize">
-            Top Page by {selectorType}
+           {["keywords","traffic"].includes(selectorType) ? "Top Page by" : topMentions ? `Top Mentions (${selectorType})` : `Trust Pilot Stats (${selectorType})`}
           </h2>
           <AiOutlineQuestionCircle color="#fff" size={20} />
         </div>
-        <div className="mt-5  overflow-y-auto max-h-[210px]">
+        <div className="mt-5 overflow-y-auto max-h-[210px]">
           {/* Header row */}
           <div className={`grid ${headers?.length === 2 ? "grid-cols-2" : "grid-cols-3"} text-gray-400 uppercase text-xs font-semibold mb-2`}>
             {headers.map((header, index) => (
@@ -50,9 +54,23 @@ const TopPageCard = ({data: pageData, selectorType}) => {
                   key={subIndex}
                   className={subIndex === 1 ? 'text-center !truncate' : 'text-left truncate'}
                 >
-                  {typeof item[key] === 'number'
-                    ? item[key].toFixed(2)
-                    : item[key]}
+                  {subIndex === 0 ? (
+                    // Render the first column as an anchor link
+                    <a
+                      href={item[key]}  // assuming the first column is a URL
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="white"
+                      title={item[key]}
+                    >
+                      {item[key]}
+                    </a>
+                  ) : (
+                    // Render the other columns as usual
+                    typeof item[key] === 'number' 
+                      ? item[key].toFixed(2) 
+                      : item[key]
+                  )}
                 </span>
               ))}
             </div>

@@ -1,4 +1,4 @@
-const ShowPageSelector = ({ selectorType, setSelectorType }) => {
+const ShowPageSelector = ({ selectorType, setSelectorType, selectors }) => {
   return (
     <div className="py-[0.3px] backdrop-blur-[100px] rounded-[36px] shadow-md border border-transparent bg-gradient-to-br from-[rgba(255,255,255,0.1)] via-[rgba(255,255,255,0.05)] to-[rgba(255,255,255,0.03)]">
       <div
@@ -12,28 +12,22 @@ const ShowPageSelector = ({ selectorType, setSelectorType }) => {
           Show page ranking by
         </h2>
         <div className="mt-5 space-y-4">
-          <button
-            onClick={() => setSelectorType("keywords")}
+          {
+            selectors && selectors.map((v,i) => (
+              <button
+              key={i}
+            onClick={() => setSelectorType(v)}
             className={`space-y-1 pl-3 py-3 rounded-xl w-full text-left ${
-              selectorType === "keywords" ? "bg-[#FFFFFF0F]" : ""
+              selectorType === v ? "bg-[#FFFFFF0F]" : ""
             } `}
           >
-            <h4 className="text-[#FFFF] font-[500] text-md">Keywords</h4>
+            <h4 className="text-[#FFFF] font-[500] capitalize text-md">{v}</h4>
             <p className="text-[#eeececbf] font-[400] text-sm">
               Some subheading of this label
             </p>
           </button>
-          <button
-            onClick={() => setSelectorType("traffic")}
-            className={`space-y-1 pl-3 py-3 rounded-xl w-full text-left ${
-              selectorType === "traffic" ? "bg-[#FFFFFF0F]" : ""
-            } `}
-          >
-            <h4 className="text-[#FFFF] font-[500] text-md">Traffic</h4>
-            <p className="text-[#eeececbf] font-[400] text-sm">
-              Some subheading of this label
-            </p>
-          </button>
+            ))
+          }
         </div>
       </div>
     </div>

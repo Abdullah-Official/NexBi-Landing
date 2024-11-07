@@ -22,41 +22,34 @@ ChartJS.register(
 
 // ChartComponent
 const KeywordsStats = ({ chartData }) => {
+  // Early return if chartData is missing
+  if (!chartData) return;
+
+  // Dynamically get labels (metrics) from the first item in chartData
+  const metricLabels = chartData[Object.keys(chartData)[0]] 
+    ? Object.keys(chartData[Object.keys(chartData)[0]]) 
+    : [];
+
   // Prepare data for the chart
-  if(!chartData) return;
-  const sortedData = Object?.keys(chartData)
-    .sort() // Sorting the keys
+  const sortedData = Object.keys(chartData)
+    .sort() // Sort the keys (dates)
     .reduce((acc, key) => {
       acc.labels.push(key);
-      acc.improved.push(chartData[key]["num_keywords_ranking_improved"]);
-      acc.declined.push(chartData[key]["num_keywords_ranking_declined"]);
-      acc.lost.push(chartData[key]["num_keywords_lost_ranking"]);
+      metricLabels.forEach((metric) => {
+        acc[metric] = acc[metric] || [];
+        acc[metric].push(chartData[key][metric]);
+      });
       return acc;
-    }, { labels: [], improved: [], declined: [], lost: [] });
-
+    }, { labels: [], ...metricLabels.reduce((acc, label) => ({ ...acc, [label]: [] }), {}) });
+    console.log({sortedData})
+  // Configure dataset based on dynamic metric labels
   const data = {
     labels: sortedData.labels,
-    pointStyle: "circle",
-    datasets: [
-      {
-        label: 'Improved',
-        data: sortedData.improved,
-        backgroundColor: '#23B649',  // Bright green
-        // borderColor: '#23B649',        // Darker green for border
-      },
-      {
-        label: 'Declined',
-        data: sortedData.declined,
-        backgroundColor: '#DF9B34',  // Bright blue
-        // borderColor: 'rgba(33, 150, 243, 1)',        // Darker blue for border
-      },
-      {
-        label: 'Lost',
-        data: sortedData.lost,
-        backgroundColor: '#CD3749',   // Bright red
-        // borderColor: 'rgba(244, 67, 54, 1)',         // Darker red for border
-      },
-    ],
+    datasets: metricLabels.map((label, index) => ({
+      label: label.charAt(0).toUpperCase() + label.slice(1),
+      data: sortedData[label],
+      backgroundColor: index === 0 ? '#23B649' : index === 1 ? '#DF9B34' : '#CD3749',
+    })),
   };
 
   const options = {
@@ -65,28 +58,27 @@ const KeywordsStats = ({ chartData }) => {
     plugins: {
       legend: {
         labels: {
-          usePointStyle: true, // This makes the legend icon a circle
-          pointStyle: 'circle', // Specify circle point style explicitly
+          usePointStyle: true,
+          pointStyle: 'circle',
         },
       },
     },
-   
-    maintainAspectRatio: false, // Allows for height and width adjustment
+    maintainAspectRatio: false,
     scales: {
-        y: {
-          beginAtZero: true,
-          position:"right",
-          border:{dash: [4, 4]},
-          grid:{
-            display:true,
-            color:"gray",
-          }
-        },
-        x: {
-          barPercentage: 0.5, // Controls the width of the bars (0.5 = 50% width of the category)
-          categoryPercentage: 0.5, // Controls the width of the category that bars take up (0.5 = 50% of the total category width)
-        },
+      y: {
+        beginAtZero: true,
+        position: "right",
+        border: { dash: [4, 4] },
+        grid: {
+          display: true,
+          color: "gray",
+        }
       },
+      x: {
+        barPercentage: 0.5,
+        categoryPercentage: 0.5,
+      },
+    },
   };
 
   return (

@@ -12,6 +12,8 @@ import CommunityCta from "./components/CommunityCta";
 import HowItWorks from "./components/HowItWorks";
 import { useEffect, useState } from "react";
 import { businessData } from "./utils/business-data";
+import { competitorsData } from "./utils/competitors-data";
+import { convertForLineChart, extractCompetitorNames, transformToKeywordsRankingStats } from "./utils/convertors";
 
 function App() {
 
@@ -57,7 +59,7 @@ function App() {
           <CardSection positives={businessResponse?.business_insights?.insights_data?.positives} opportunities={businessResponse?.business_insights?.insights_data?.opportunities} />
           <ActionableSteps actionableTasks={businessData?.business_insights?.actionable_tasks} />
           <div className="!mt-20">
-            <StatisticsSection data={{
+            <StatisticsSection selectors={["traffic", "keywords"]} data={{
               trafficImpressionsData: businessResponse?.traffic_impressions,
               keywordsRankingStatsData: businessResponse?.keywords_ranking_stats,
               keywordsMovementStatsData: businessResponse?.keywords_movement_stats,
@@ -67,6 +69,19 @@ function App() {
             }} />
           </div>
           <CompetitorInsightsCard />
+          <ReviewSection title={competitorsData?.competitors_insights?.title} summary={competitorsData?.competitors_insights?.insights_data?.overall_summary} />
+          <CardSection positives={competitorsData?.competitors_insights?.insights_data?.positives} opportunities={competitorsData?.competitors_insights?.insights_data?.opportunities} />
+          <ActionableSteps actionableTasks={competitorsData?.competitors_insights?.actionable_tasks} />
+          <div className="!mt-20">
+            <StatisticsSection  selectors={["Business",...extractCompetitorNames({num_ranked_keywords:competitorsData?.num_ranked_keywords})]} 
+            data={{
+              trafficImpressionsData: convertForLineChart({traffic_stats:competitorsData?.traffic_stats}),
+              keywordsRankingStatsData: transformToKeywordsRankingStats({num_ranked_keywords:competitorsData?.num_ranked_keywords}),
+              topMentions: competitorsData?.top_mentions,
+              backlinksData: {total_backlinks: competitorsData?.total_backlinks},
+              trustPilotStats: competitorsData?.trustpilot_stats
+            }} />
+          </div>
           <div className="flex justify-center items-center !my-10 md:!my-20 ">
             <ParagraphSection />
           </div>
