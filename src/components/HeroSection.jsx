@@ -1,3 +1,4 @@
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaArrowRight } from "react-icons/fa";
 
 const HeroSection = ({domain, setDomain, isLoading, getBusinessData}) => {
@@ -21,7 +22,15 @@ const HeroSection = ({domain, setDomain, isLoading, getBusinessData}) => {
           onChange={(e) => setDomain(e.target.value)}
         />
         <button disabled={isLoading} onClick={getBusinessData} style={{boxShadow:"0px 0px 8px 0.5px #172BA1 inset"}} className="border border-[#DDDFEE1A] bg-[#2443F912] px-4 py-3.5 rounded-full text-white disabled:cursor-not-allowed">
-          <FaArrowRight size={16} color="#fff" />
+          {
+            isLoading ? (
+              <div className="disabled:!animate-spin">
+              <AiOutlineLoading3Quarters size={18} color="#fff"  />
+              </div>
+            ) : (
+              <FaArrowRight size={16} color="#fff" />
+            )
+          }
         </button>
       </div>
     </section>

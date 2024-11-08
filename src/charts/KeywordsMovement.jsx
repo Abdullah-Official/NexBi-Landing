@@ -25,7 +25,6 @@ const KeywordsMovement = ({ chartData }) => {
   // Prepare data for the chart
   if(!chartData) return;
   const sortedData = Object?.keys(chartData)
-    .sort() // Sorting the keys
     .reduce((acc, key) => {
       acc.labels.push(key);
       acc.firstPage.push(chartData[key]["num_keywords_ranking_on_first_page"] || 0);

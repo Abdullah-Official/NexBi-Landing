@@ -32,7 +32,6 @@ const KeywordsStats = ({ chartData }) => {
 
   // Prepare data for the chart
   const sortedData = Object.keys(chartData)
-    .sort() // Sort the keys (dates)
     .reduce((acc, key) => {
       acc.labels.push(key);
       metricLabels.forEach((metric) => {
