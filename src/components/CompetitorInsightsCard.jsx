@@ -24,27 +24,11 @@ const CompetitorInsightsCard = ({formData, handleChange, handleSubmit, isLoading
             className="w-full px-4 py-3 rounded-full border border-[#FFFFFF12] bg-[#FFFFFF05] text-white placeholder-opacity-25 placeholder-[#FFFFFF] placeholder:text-sm focus:outline-none"
           />
           <input
-            type="text"
-            name="competitor_0_name"
-            value={formData.competitors[0].name}
-            onChange={handleChange}
-            placeholder="Enter name of competitor 1"
-            className="w-full px-4 py-3 rounded-full border border-[#FFFFFF12] bg-[#FFFFFF05] text-white placeholder-opacity-25 placeholder-[#FFFFFF] placeholder:text-sm focus:outline-none"
-          />
-          <input
             type="url"
             name="competitor_0_url"
             value={formData.competitors[0].url}
             onChange={handleChange}
             placeholder="Enter your competitor 1 URL"
-            className="w-full px-4 py-3 rounded-full border border-[#FFFFFF12] bg-[#FFFFFF05] text-white placeholder-opacity-25 placeholder-[#FFFFFF] placeholder:text-sm focus:outline-none"
-          />
-          <input
-            type="text"
-            name="competitor_1_name"
-            value={formData.competitors[1].name}
-            onChange={handleChange}
-            placeholder="Enter name of competitor 2 (OPTIONAL)"
             className="w-full px-4 py-3 rounded-full border border-[#FFFFFF12] bg-[#FFFFFF05] text-white placeholder-opacity-25 placeholder-[#FFFFFF] placeholder:text-sm focus:outline-none"
           />
           <input
@@ -73,7 +57,7 @@ const CompetitorInsightsCard = ({formData, handleChange, handleSubmit, isLoading
             <p>See Competitor Insights</p>
             {
             isLoading ? (
-              <div className="disabled:animate-spin">
+              <div className="animate-spin mt-1">
               <AiOutlineLoading3Quarters size={18} color="#fff"  />
               </div>
             ) : (

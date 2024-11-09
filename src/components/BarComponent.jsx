@@ -1,9 +1,14 @@
 import React from "react";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
-import { FaArrowUp } from "react-icons/fa";
+import { Tooltip } from "react-tooltip";
 
-const BarComponent = ({ chartData, heading, ChartComponent }) => {
-  console.log(heading);
+const BarComponent = ({
+  chartData,
+  heading,
+  ChartComponent,
+  isCompetitors,
+}) => {
+  console.log({ isCompetitors });
   return (
     <div className="py-[0.3px] backdrop-blur-[100px] rounded-[36px] shadow-md border border-transparent bg-gradient-to-br from-[rgba(255,255,255,0.1)] via-[rgba(255,255,255,0.05)] to-[rgba(255,255,255,0.03)]">
       <div
@@ -18,14 +23,86 @@ const BarComponent = ({ chartData, heading, ChartComponent }) => {
             <h2 className="text-[18px] text-[#fff] font-[550] truncate">
               {heading}
             </h2>
-            {["Keywords Movement", "Keywords Traffic"].includes(heading) ? (
-              <AiOutlineQuestionCircle color="#fff" size={20} />
-            ) : (
-              <button className="flex gap-2 py-2 px-3 bg-[#75FF9A14] rounded-lg justify-center items-center">
-                <FaArrowUp size={15} color={"#55F69D"} />
-                <p className="font-bold text-sm text-[#55F69D]">50%</p>
-              </button>
-            )}
+            {heading === "Keywords Movement" ? (
+              <div>
+                <Tooltip anchorSelect=".kw_move" place="top-start">
+                  Overall, keywords moved from the top page to the 10th page of
+                  Google over a period of six months.
+                </Tooltip>
+                <AiOutlineQuestionCircle
+                  className="kw_move cursor-pointer"
+                  color="#fff"
+                  size={20}
+                />
+              </div>
+            ) : heading === "Keywords Ranking" ? (
+              <div className="!z-50">
+                {isCompetitors ? (
+                  <>
+                  <Tooltip
+                    anchorSelect=".kw_ranking_compet"
+                    className="!w-full md:!w-[350px]"
+                    place="bottom-end"
+                  >
+                    A total number of ranked keywords of your business and
+                    competition over the period of the last six months.
+                  </Tooltip>
+                  
+                <AiOutlineQuestionCircle
+                  className="kw_ranking_compet cursor-pointer"
+                  color="#fff"
+                  size={20}
+                />
+                  </>
+                ) : (
+                  <>
+                  <Tooltip
+                    anchorSelect=".kw_ranking"
+                    className="!w-full md:!w-[350px]"
+                    place="bottom-end"
+                  >
+                    The number of keywords ranking improved, declined, or
+                    completely lost over the period of the last six months.
+                  </Tooltip>
+                  
+                <AiOutlineQuestionCircle
+                className="kw_ranking cursor-pointer"
+                color="#fff"
+                size={20}
+              />
+              </>
+                )}
+              </div>
+            ) : heading === "Traffic & Impressions" ? (
+              <div>
+                {
+                  isCompetitors ? (
+                    <>
+                    <Tooltip anchorSelect=".traffic_imp_compet" place="bottom-end">
+                    Your business and competitors’ website traffic for the last six months
+                </Tooltip>
+                <AiOutlineQuestionCircle
+                  className="traffic_imp_compet cursor-pointer"
+                  color="#fff"
+                  size={20}
+                />
+                    </>
+                  ) : (
+                    <>
+                    <Tooltip anchorSelect=".traffic_imp" place="bottom-end">
+                  Your website’s overall traffic and impressions over a period
+                  of six months.
+                </Tooltip>
+                <AiOutlineQuestionCircle
+                  className="traffic_imp cursor-pointer"
+                  color="#fff"
+                  size={20}
+                />
+                    </>
+                  )
+                }
+              </div>
+            ) : null}
           </div>
           <ChartComponent chartData={chartData} />
         </div>

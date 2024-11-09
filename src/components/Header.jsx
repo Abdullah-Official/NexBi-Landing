@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import NexbiLogo from "../assets/nexbi_logo.png";
+import NexbiLogo from "../assets/nexbi_logo.svg";
 
-const Header = ({handleWaitlistModal}) => {
+const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -32,15 +32,14 @@ const Header = ({handleWaitlistModal}) => {
           : "linear-gradient(90.29deg, rgba(9, 10, 12, 0.02) 11.9%, rgba(7, 7, 9, 0.02) 76.85%)", // Linear gradient when at the top
       }}
     >
-      <img src={NexbiLogo} alt="nexbi_logo" className="object-contain" />
+      <img src={NexbiLogo} width="100px" height="18px" alt="nexbi_logo" className="object-contain" />
       <nav className="space-x-12 items-center hidden md:flex">
         <a href="#" className="hover:text-gray-400">Home</a>
         <a href="#how_it_works" className="text-[#F7F8F8] opacity-[0.45]">How it works</a>
-        <a href="#" className="text-[#F7F8F8] opacity-[0.45]">Roadmap</a>
       </nav>
-      <button onClick={handleWaitlistModal} className="bg-[#FFFFFF1A] text-md px-5 py-2.5 rounded-full">
+      <a href="#waitlist" className="bg-[#FFFFFF1A] text-md px-5 py-2.5 rounded-full">
         Join the waitlist
-      </button>
+      </a>
     </header>
   );
 };

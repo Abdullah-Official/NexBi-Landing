@@ -10,17 +10,22 @@ import CtaCardsSection from "./components/CtaCardsSection";
 import ParagraphSection from "./components/ParagraphSection";
 import CommunityCta from "./components/CommunityCta";
 import HowItWorks from "./components/HowItWorks";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { businessData } from "./utils/business-data";
 import {
   convertForLineChart,
   extractCompetitorNames,
   transformToKeywordsRankingStats,
 } from "./utils/convertors";
-import CustomModal from "./components/CustomModal";
-import { FiArrowRight } from "react-icons/fi";
-import { postBusinessData, postCompetitorData, postWaitlist } from "./utils/api";
+import {
+  postBusinessData,
+  postCompetitorData,
+  postWaitlist,
+} from "./utils/api";
 import { toast } from "react-toastify";
+import 'react-loading-skeleton/dist/skeleton.css'
+import LoadingIndicator from "./components/LoadingIndicator";
+
 
 function App() {
   const [businessResponse, setBusinessResponse] = useState();
@@ -28,17 +33,17 @@ function App() {
   const [waitlistModal, setWaitlistModal] = useState(false);
   const [domain, setDomain] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingCompet, setIsLoadingCompet] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
-    company_name: "",
     competitors: [
-      { name: "", url: "" },
-      { name: "", url: "" },
+      { url: "" },
+      { url: "" },
     ],
     contact_us: false,
     insights_exist: true,
   });
-  const [waitlistForm, setWaitlistForm] = useState({name:"", email: ""});
+  const [waitlistForm, setWaitlistForm] = useState({ name: "", email: "" });
 
   const handleChangeWaitlist = (e) => {
     const { name, value } = e.target;
@@ -46,7 +51,7 @@ function App() {
       ...prevData,
       [name]: value,
     }));
-  }
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -72,10 +77,12 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await getCompetitorsData()
+    await getCompetitorsData();
   };
 
   const getBusinessData = async () => {
+    setBusinessResponse();
+    setCompetitorsData()
     try {
       setIsLoading(true);
       const response = await postBusinessData({
@@ -84,10 +91,12 @@ function App() {
       });
       console.log(response, " response");
       setBusinessResponse(response);
-      toast.success("Business Data Generated Successfully", {autoClose: "2000"})
+      toast.success("Business Data Generated Successfully", {
+        autoClose: "2000",
+      });
     } catch (error) {
       console.error("Error fetching business data:", error);
-      toast.error("Something Went Wrong! Try again", {autoClose: "2000"})
+      toast.error("Something Went Wrong! Try again", { autoClose: "2000" });
     } finally {
       setIsLoading(false);
     }
@@ -95,49 +104,49 @@ function App() {
 
   const getCompetitorsData = async () => {
     try {
-      setIsLoading(true);
+      setIsLoadingCompet(true);
       const response = await postCompetitorData({
         user_id: businessResponse?.user_id,
         ...formData,
-        competitors: formData.competitors.map((v) => {
-          if(v.name !== "" && v.url !== ""){
-            return {
-              name: v.name,
+        competitors: formData.competitors.reduce((acc, v) => {
+          if (v.url !== "") {
+            acc.push({
               url: v.url,
-            }
+            });
           }
-        })
+          return acc;
+        }, []), // Start with an empty array and only add items that match
       });
       console.log(response, " response");
       setCompetitorsData(response);
-      toast.success("Competitors Insights Generated Successfully", {autoClose: "2000"})
+      toast.success("Competitors Insights Generated Successfully", {
+        autoClose: "2000",
+      });
     } catch (error) {
       console.error("Error fetching competitors data:", error);
-      toast.error("Something Went Wrong! Try again", {autoClose: "2000"})
+      toast.error("Something Went Wrong! Try again", { autoClose: "2000" });
     } finally {
-      setIsLoading(false);
+      setIsLoadingCompet(false);
     }
   };
   const submitWaitlist = async () => {
     try {
       setIsLoading(true);
       const response = await postWaitlist({
-        ...waitlistForm
+        ...waitlistForm,
       });
       console.log(response, " response");
-      toast.success("Thank you for joining the waitlist! We'll be in touch soon.", {autoClose: "2000"})
+      toast.success(
+        "Thank you for joining the waitlist! We'll be in touch soon.",
+        { autoClose: "2000" }
+      );
     } catch (error) {
       console.error("Error fetching competitors data:", error);
-      toast.error("Something Went Wrong! Try again", {autoClose: "2000"})
+      toast.error("Something Went Wrong! Try again", { autoClose: "2000" });
     } finally {
-      setWaitlistForm({name:"", email: ""})
+      setWaitlistForm({ name: "", email: "" });
       setIsLoading(false);
-      setWaitlistModal(false)
     }
-  };
-
-  const handleWaitlistModal = () => {
-    setWaitlistModal(true);
   };
 
   return (
@@ -152,14 +161,20 @@ function App() {
       </div>
 
       <div className="relative w-full max-w-[66rem] mx-auto py-4 mb-20">
-        <Header handleWaitlistModal={handleWaitlistModal} />
+        <Header />
         <div className="mt-20 md:mt-32 space-y-6 px-5 w-[95%] sm:w-full mx-auto">
+         
           <HeroSection
             getBusinessData={getBusinessData}
             domain={domain}
             setDomain={setDomain}
             isLoading={isLoading}
           />
+           {
+            isLoading ? (
+              <LoadingIndicator isLoading={isLoading} />
+            ) : null
+          }
           <div
             style={{
               background:
@@ -167,9 +182,10 @@ function App() {
             }}
             className="flex justify-center mb-10 md:!mb-16 !mt-2 bg-blue-300 items-center relative w-full"
           ></div>
-          {businessResponse ? (
+          {(businessResponse || isLoading) ? (
             <>
               <ReviewSection
+                isLoading={isLoading}
                 title={businessResponse?.business_insights?.title}
                 summary={
                   businessResponse?.business_insights?.insights_data
@@ -177,6 +193,7 @@ function App() {
                 }
               />
               <CardSection
+              isLoading={isLoading}
                 positives={
                   businessResponse?.business_insights?.insights_data?.positives
                 }
@@ -186,12 +203,15 @@ function App() {
                 }
               />
               <ActionableSteps
+              isLoading={isLoading}
                 actionableTasks={
                   businessData?.business_insights?.actionable_tasks
                 }
               />
+              {businessResponse && 
               <div className="!mt-20">
                 <StatisticsSection
+                  isCompetitors={false}
                   selectors={["traffic", "keywords"]}
                   data={{
                     trafficImpressionsData:
@@ -205,38 +225,20 @@ function App() {
                     topPageTraffic: businessResponse?.top_pages_by_traffic,
                   }}
                 />
-              </div>
+              </div>}
             </>
           ) : null}
-          <div
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #060809 100%)",
-            }}
-            className="absolute bottom-0 left-0 w-full !bg-red-400"
-          />
-          <div
-            id="video"
-            className="w-full h-[250px] sm:h-[380px] md:h-[549px]"
-          >
-            <iframe
-              width="100%"
-              height={"100%"}
-              src="https://www.youtube.com/embed/N45UC2WCwpk?si=YR79KtgPkyZK1nDE"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
-          </div>
-
-          {businessResponse && competitorsData ? (
+         
+          {((businessResponse && competitorsData) || isLoadingCompet) ? (
             <>
+            <h1 className="text-lg md:text-2xl lg:text-3xl text-white text-center font-[600] !mt-10 my-5">Competitors Insights</h1>
               <ReviewSection
                 title={competitorsData?.competitors_insights?.title}
                 summary={
                   competitorsData?.competitors_insights?.insights_data
                     ?.overall_summary
                 }
+                isLoading={isLoadingCompet}
               />
               <CardSection
                 positives={
@@ -247,14 +249,19 @@ function App() {
                   competitorsData?.competitors_insights?.insights_data
                     ?.opportunities
                 }
+                isLoading={isLoadingCompet}
               />
               <ActionableSteps
                 actionableTasks={
                   competitorsData?.competitors_insights?.actionable_tasks
                 }
+                isLoading={isLoadingCompet}
               />
-              <div className="!mt-20">
+              {
+                competitorsData && (
+                  <div className="!mt-20">
                 <StatisticsSection
+                  isCompetitors={true}
                   selectors={[
                     "Business",
                     ...extractCompetitorNames({
@@ -276,6 +283,8 @@ function App() {
                   }}
                 />
               </div>
+                )
+              }
             </>
           ) : businessResponse ? (
             <CompetitorInsightsCard
@@ -285,6 +294,27 @@ function App() {
               isLoading={isLoading}
             />
           ) : null}
+           <div
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #060809 100%)",
+            }}
+            className="absolute bottom-0 left-0 w-full !bg-red-400"
+          />
+          <div
+            id="video"
+            className="w-full h-[250px] sm:h-[380px] md:h-[549px]"
+          >
+            <iframe
+              width="100%"
+              height={"100%"}
+              src="https://www.youtube.com/embed/N45UC2WCwpk?si=YR79KtgPkyZK1nDE"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+
           <div className="flex justify-center items-center !my-10 md:!my-20 ">
             <ParagraphSection />
           </div>
@@ -292,43 +322,15 @@ function App() {
             <CtaCardsSection businessResponse={businessResponse} />
           </div>
           <HowItWorks />
-          <CommunityCta handleWaitlistModal={handleWaitlistModal} />
+          
         </div>
       </div>
-      <CustomModal onClose={() => setWaitlistModal(false)} open={waitlistModal}>
-        <h2 className="text-left text-white text-xl font-semibold">
-          Join the waitlist
-        </h2>
-        <div className="h-[300px] flex justify-center items-center">
-          <form className="space-y-4">
-            <input
-              type="email"
-              value={waitlistForm.email}
-              onChange={handleChangeWaitlist}
-              name="email"
-              placeholder="Enter your email here"
-              className="w-full px-4 py-3 rounded-full border border-[#FFFFFF12] bg-[#FFFFFF05] text-white placeholder-opacity-25 placeholder-[#FFFFFF] placeholder:text-sm focus:outline-none"
-            />
-            <input
-              type="text"
-              value={waitlistForm.name}
-              onChange={handleChangeWaitlist}
-              name="name"
-              placeholder="Enter your name here"
-              className="w-full px-4 py-3 rounded-full border border-[#FFFFFF12] bg-[#FFFFFF05] text-white placeholder-opacity-25 placeholder-[#FFFFFF] placeholder:text-sm focus:outline-none"
-            />
-            <button
-              disabled={isLoading}
-              onClick={submitWaitlist}
-              type="submit"
-              className="flex items-center justify-center disabled:cursor-not-allowed text-sm gap-3 w-full py-3.5 !mt-6 text-center font-semibold text-white bg-[#0773ED] rounded-full hover:bg-blue-700 focus:outline-none"
-            >
-              <p>Submit</p>
-              <FiArrowRight size={20} color="#fff" />
-            </button>
-          </form>
-        </div>
-      </CustomModal>
+      <CommunityCta
+            submitWaitlist={submitWaitlist}
+            waitlistForm={waitlistForm}
+            handleChangeWaitlist={handleChangeWaitlist}
+            isLoading={isLoading}
+          />
     </div>
   );
 }

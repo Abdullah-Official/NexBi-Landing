@@ -5,6 +5,8 @@ import "./index.css";
 import App from "./App.jsx";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
+import 'react-tooltip/dist/react-tooltip.css'
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -12,13 +14,7 @@ createRoot(document.getElementById("root")).render(
       position="bottom-left"
       autoClose={2000}
       hideProgressBar={false}
-      newestOnTop={false}
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
       theme="dark"
-      transition="Bounce"
     />
     <App />
   </StrictMode>
