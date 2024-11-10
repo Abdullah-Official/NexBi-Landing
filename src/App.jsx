@@ -75,9 +75,14 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!isInsightsAvailable) {
+      await getCompetitorsData();
+      return;
+    }
     const resp = await postCheckInsights({
       user_id: businessResponse?.user_id,
     });
+    setIsInsightsAvailable(resp?.insights_available)
     if (resp?.insights_available) {
       await getCompetitorsData();
       return;
