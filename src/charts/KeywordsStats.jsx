@@ -47,7 +47,7 @@ const KeywordsStats = ({ chartData }) => {
     datasets: metricLabels.map((label, index) => ({
       label: label.charAt(0).toUpperCase() + label.slice(1),
       data: sortedData[label],
-      backgroundColor: index === 0 ? '#23B649' : index === 1 ? '#DF9B34' : '#CD3749',
+      backgroundColor: index === 0 ? '#23B649' : index === 1 ? '#DF9B34' : '#088F8F',
     })),
   };
 
@@ -71,7 +71,17 @@ const KeywordsStats = ({ chartData }) => {
         grid: {
           display: true,
           color: "gray",
-        }
+        },
+        ticks: {
+          callback: function (value) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M"; // 1,000,000 -> 1M
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "k"; // 1,000 -> 1k
+            }
+            return value; // Below 1000, keep the original value
+          },
+        },
       },
       x: {
         barPercentage: 0.5,

@@ -45,7 +45,7 @@ border: 4px solid transparent;
 }
 
 .scroll-reveal  span {
-  color: hsl(0 0% 100% / 0.2);
+  color: hsl(0 0% 100% / 0.8);
   background-clip: text;
   background-repeat: no-repeat;
   background-size: 0% 100%;

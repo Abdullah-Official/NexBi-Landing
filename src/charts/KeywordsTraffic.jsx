@@ -85,7 +85,17 @@ const KeywordsTraffic = ({ chartData }) => {
         grid: {
           display: true,
           color: "gray",
-        }
+        },
+        ticks: {
+          callback: function (value) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + "M"; // 1,000,000 -> 1M
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + "k"; // 1,000 -> 1k
+            }
+            return value; // Below 1000, keep the original value
+          },
+        },
       },
       x: {
         barPercentage: 0.5,

@@ -4,7 +4,7 @@ const CtaCardsSection = ({businessResponse}) => {
   return (
     <>
     <div className="flex justify-center">
-    <h1 className="text-md md:text-2xl lg:text-3xl max-w-lg text-center text-white  font-[600] mb-5 md:mb-8">
+    <h1 className="text-md md:text-2xl lg:text-3xl max-w-lg text-center text-white  font-[600] mb-6 md:!mb-12">
       Personalized insights tailored to help you meet your business goals
       </h1>
     </div>
@@ -40,6 +40,11 @@ const CtaCardsSection = ({businessResponse}) => {
          <div className='bg-[#FFFFFF0D] rounded-3xl hidden md:flex p-6'>
             <p className='text-white text-sm text-opacity-60'>
            {"Your business shows a strong backlink profile with over 2.1 million diverse backlinks, enhancing authority. There's a positive trend from October to November. Top pages perform well for low-competition keywords and feature snippets, indicating authoritative content."}
+            </p>
+         </div>
+         <div className='bg-[#FFFFFF0D] rounded-3xl hidden md:flex p-6'>
+            <p className='text-white text-sm text-opacity-60'>
+           {"Your business's SEO performance has shown significant volatility, with a peak in traffic and keyword rankings in September 2024 followed by a decline in the subsequent months. This led to fewer online orders in October 2024."}
             </p>
          </div>
         </div>

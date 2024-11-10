@@ -32,7 +32,7 @@ const LoadingIndicator = ({ isLoading }) => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-6">
-      <p className="text-white text-lg md:text-2xl font-[600]">Gathering Data...</p>
+      <p className="text-white text-lg md:text-2xl font-[600]">Gathering data and analyzing...</p>
       <div className="w-full max-w-md h-1 bg-[#78788029] rounded">
         <div
           className="h-full bg-blue-500 transition-all duration-300 ease-in-out rounded"

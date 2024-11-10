@@ -27,7 +27,7 @@ const HowItWorks = () => {
   const [videoModal, setVideoModal] = useState(false);
 
   useEffect(() => {
-    const intervalDuration = 3000; // 5 seconds total for each step
+    const intervalDuration = 5000; // 5 seconds total for each step
     const updateInterval = 50; // Update progress every 50ms for smoothness
     const increment = (100 * updateInterval) / intervalDuration; // Calculate progress increment per update
 

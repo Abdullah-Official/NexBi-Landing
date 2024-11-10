@@ -58,7 +58,7 @@ const ActionableSteps = ({ actionableTasks, isLoading }) => {
               ))}
             </div>
           ) : (
-            <div className="flex flex-col md:flex-row gap-6 justify-start items-center max-w-full hover:scrollbar-default scrollbar-hide overflow-x-auto">
+            <div className="flex flex-row gap-6 justify-start items-center max-w-full hover:scrollbar-default scrollbar-hide overflow-x-auto">
               {actionableTasks &&
                 actionableTasks.map((v, i) => (
                   <div className="max-w-[300px] flex-shrink-0" key={i}>

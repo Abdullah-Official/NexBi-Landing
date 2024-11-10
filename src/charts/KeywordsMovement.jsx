@@ -49,7 +49,7 @@ const KeywordsMovement = ({ chartData }) => {
       {
         label: '4th - 10th page',
         data: sortedData.fourthTenthPage,
-        backgroundColor: '#CD3749',
+        backgroundColor: '#088F8F',
       },
     ],
   };

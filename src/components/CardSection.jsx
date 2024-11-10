@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 
 const CardSection = ({ positives, opportunities, isLoading }) => {
+  const [expandPositives, setExpandPositives] = useState(false);
+  const [expandOpportunities, setExpandOpportunities] = useState(false);
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-6  mt-6">
       <div className="py-[0.3px] backdrop-blur-[100px] rounded-[36px] shadow-md border border-transparent bg-gradient-to-br from-[rgba(255,255,255,0.1)] via-[rgba(255,255,255,0.05)] to-[rgba(255,255,255,0.03)]">
@@ -36,11 +39,11 @@ const CardSection = ({ positives, opportunities, isLoading }) => {
                 }}
               />
             ) : (
-              positives || ""
+              !expandPositives && positives.length > 240 ? positives?.slice(0,240)+"..." : positives || ""
             )}
           </p>
 
-          <button disabled={isLoading} className="disabled:cursor-not-allowed disabled:opacity-40 flex items-center gap-1.5 font-[600] text-[#1482FF]">
+          <button onClick={() => setExpandPositives(!expandPositives)} disabled={isLoading} className="disabled:cursor-not-allowed disabled:opacity-40 flex items-center gap-1.5 font-[600] text-[#1482FF]">
             <p>Learn More</p>
             <FaPlus size={13} color={"#1482FF"} />
           </button>
@@ -67,7 +70,7 @@ const CardSection = ({ positives, opportunities, isLoading }) => {
               "Opportunities 🚀"
             )}
           </h3>
-          <p className="text-[15px] line-clamp-6 opacity-75 text-[#FFFFFFBF] font-[400] mb-4">
+          <p className="text-[15px] opacity-75 text-[#FFFFFFBF] font-[400] mb-4">
             {isLoading ? (
               <Skeleton
                 className="max-w-md !rounded-full mb-2 opacity-25"
@@ -78,10 +81,10 @@ const CardSection = ({ positives, opportunities, isLoading }) => {
                 }}
               />
             ) : (
-              opportunities || ""
+              !expandOpportunities ? opportunities?.slice(0,240)+"..." : opportunities || ""
             )}
           </p>
-          <button disabled={isLoading} className="disabled:cursor-not-allowed disabled:opacity-40 flex items-center gap-1.5 font-[600] text-[#1482FF]">
+          <button onClick={() => setExpandOpportunities(!expandOpportunities)} disabled={isLoading} className="disabled:cursor-not-allowed disabled:opacity-40 flex items-center gap-1.5 font-[600] text-[#1482FF]">
             <p>Learn More</p>
             <FaPlus size={13} color={"#1482FF"} />
           </button>

@@ -2,7 +2,7 @@ const CommunityCta = ({ waitlistForm, handleChangeWaitlist, isLoading, submitWai
   return (
     <div
       id="waitlist"
-      className="flex items-center justify-center gap-5 flex-col my-10 p-4"
+      className="flex items-center justify-center gap-5 flex-col mt-10 p-4"
       style={{
         background: "linear-gradient(180deg, #060809 0%, rgba(20, 21, 22, 0.6) 100%)"
       }}
@@ -19,7 +19,7 @@ const CommunityCta = ({ waitlistForm, handleChangeWaitlist, isLoading, submitWai
           value={waitlistForm.email}
           onChange={handleChangeWaitlist}
           name="email"
-          placeholder="Enter your email here"
+          placeholder="Email"
           className="w-full px-4 py-3 rounded-full border border-[#FFFFFF12] bg-[#FFFFFF05] text-white placeholder-opacity-25 placeholder-[#FFFFFF] placeholder:text-sm focus:outline-none"
         />
         <input
@@ -27,14 +27,14 @@ const CommunityCta = ({ waitlistForm, handleChangeWaitlist, isLoading, submitWai
           value={waitlistForm.name}
           onChange={handleChangeWaitlist}
           name="name"
-          placeholder="Enter your name here"
+          placeholder="Name"
           className="w-full px-4 py-3 rounded-full border border-[#FFFFFF12] bg-[#FFFFFF05] text-white placeholder-opacity-25 placeholder-[#FFFFFF] placeholder:text-sm focus:outline-none"
         />
 
         <button
           disabled={isLoading}
           onClick={submitWaitlist}
-          className="text-[16px] fon-[600] text-black px-5 py-2.5 rounded-full"
+          className="text-[16px] fon-[600] text-black px-5 py-2.5 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
           style={{
             background:
               "linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.7) 100%)",

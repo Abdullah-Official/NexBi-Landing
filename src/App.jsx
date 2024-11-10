@@ -10,7 +10,7 @@ import CtaCardsSection from "./components/CtaCardsSection";
 import ParagraphSection from "./components/ParagraphSection";
 import CommunityCta from "./components/CommunityCta";
 import HowItWorks from "./components/HowItWorks";
-import {  useState } from "react";
+import { useState } from "react";
 import { businessData } from "./utils/business-data";
 import {
   convertForLineChart,
@@ -19,27 +19,25 @@ import {
 } from "./utils/convertors";
 import {
   postBusinessData,
+  postCheckInsights,
   postCompetitorData,
   postWaitlist,
 } from "./utils/api";
 import { toast } from "react-toastify";
-import 'react-loading-skeleton/dist/skeleton.css'
+import "react-loading-skeleton/dist/skeleton.css";
 import LoadingIndicator from "./components/LoadingIndicator";
-
+import Footer from "./components/Footer";
 
 function App() {
   const [businessResponse, setBusinessResponse] = useState();
   const [competitorsData, setCompetitorsData] = useState();
-  const [waitlistModal, setWaitlistModal] = useState(false);
+  const [isInsightsAvailable, setIsInsightsAvailable] = useState(true);
   const [domain, setDomain] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingCompet, setIsLoadingCompet] = useState(false)
+  const [isLoadingCompet, setIsLoadingCompet] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
-    competitors: [
-      { url: "" },
-      { url: "" },
-    ],
+    competitors: [{ url: "" }, { url: "" }],
     contact_us: false,
     insights_exist: true,
   });
@@ -77,12 +75,21 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await getCompetitorsData();
+    const resp = await postCheckInsights({
+      user_id: businessResponse?.user_id,
+    });
+    if (resp?.insights_available) {
+      await getCompetitorsData();
+      return;
+    } else {
+      setIsInsightsAvailable(false);
+      return;
+    }
   };
 
   const getBusinessData = async () => {
     setBusinessResponse();
-    setCompetitorsData()
+    setCompetitorsData();
     try {
       setIsLoading(true);
       const response = await postBusinessData({
@@ -111,7 +118,7 @@ function App() {
         competitors: formData.competitors.reduce((acc, v) => {
           if (v.url !== "") {
             acc.push({
-              url: v.url,
+              website: v.url,
             });
           }
           return acc;
@@ -163,18 +170,13 @@ function App() {
       <div className="relative w-full max-w-[66rem] mx-auto py-4 mb-20">
         <Header />
         <div className="mt-20 md:mt-32 space-y-6 px-5 w-[95%] sm:w-full mx-auto">
-         
           <HeroSection
             getBusinessData={getBusinessData}
             domain={domain}
             setDomain={setDomain}
             isLoading={isLoading}
           />
-           {
-            isLoading ? (
-              <LoadingIndicator isLoading={isLoading} />
-            ) : null
-          }
+          {isLoading ? <LoadingIndicator isLoading={isLoading} /> : null}
           <div
             style={{
               background:
@@ -182,7 +184,7 @@ function App() {
             }}
             className="flex justify-center mb-10 md:!mb-16 !mt-2 bg-blue-300 items-center relative w-full"
           ></div>
-          {(businessResponse || isLoading) ? (
+          {businessResponse || isLoading ? (
             <>
               <ReviewSection
                 isLoading={isLoading}
@@ -193,7 +195,7 @@ function App() {
                 }
               />
               <CardSection
-              isLoading={isLoading}
+                isLoading={isLoading}
                 positives={
                   businessResponse?.business_insights?.insights_data?.positives
                 }
@@ -203,35 +205,38 @@ function App() {
                 }
               />
               <ActionableSteps
-              isLoading={isLoading}
+                isLoading={isLoading}
                 actionableTasks={
                   businessData?.business_insights?.actionable_tasks
                 }
               />
-              {businessResponse && 
-              <div className="!mt-20">
-                <StatisticsSection
-                  isCompetitors={false}
-                  selectors={["traffic", "keywords"]}
-                  data={{
-                    trafficImpressionsData:
-                      businessResponse?.traffic_impressions,
-                    keywordsRankingStatsData:
-                      businessResponse?.keywords_ranking_stats,
-                    keywordsMovementStatsData:
-                      businessResponse?.keywords_movement_stats,
-                    topRankedKeywords: businessResponse?.top_ranked_keywords,
-                    topPageKeywords: businessResponse?.top_pages_by_keywords,
-                    topPageTraffic: businessResponse?.top_pages_by_traffic,
-                  }}
-                />
-              </div>}
+              {businessResponse && (
+                <div className="!mt-20">
+                  <StatisticsSection
+                    isCompetitors={false}
+                    selectors={["traffic", "keywords"]}
+                    data={{
+                      trafficImpressionsData:
+                        businessResponse?.traffic_impressions,
+                      keywordsRankingStatsData:
+                        businessResponse?.keywords_ranking_stats,
+                      keywordsMovementStatsData:
+                        businessResponse?.keywords_movement_stats,
+                      topRankedKeywords: businessResponse?.top_ranked_keywords,
+                      topPageKeywords: businessResponse?.top_pages_by_keywords,
+                      topPageTraffic: businessResponse?.top_pages_by_traffic,
+                    }}
+                  />
+                </div>
+              )}
             </>
           ) : null}
-         
-          {((businessResponse && competitorsData) || isLoadingCompet) ? (
+
+          {(businessResponse && competitorsData) || isLoadingCompet ? (
             <>
-            <h1 className="text-lg md:text-2xl lg:text-3xl text-white text-center font-[600] !mt-10 my-5">Competitors Insights</h1>
+              <h1 className="text-lg md:text-2xl lg:text-3xl text-white text-center font-[600] !mt-10 my-5">
+                Competitors Insights
+              </h1>
               <ReviewSection
                 title={competitorsData?.competitors_insights?.title}
                 summary={
@@ -257,34 +262,35 @@ function App() {
                 }
                 isLoading={isLoadingCompet}
               />
-              {
-                competitorsData && (
-                  <div className="!mt-20">
-                <StatisticsSection
-                  isCompetitors={true}
-                  selectors={[
-                    "Business",
-                    ...extractCompetitorNames({
-                      num_ranked_keywords: competitorsData?.num_ranked_keywords,
-                    }),
-                  ]}
-                  data={{
-                    trafficImpressionsData: convertForLineChart({
-                      traffic_stats: competitorsData?.traffic_stats,
-                    }),
-                    keywordsRankingStatsData: transformToKeywordsRankingStats({
-                      num_ranked_keywords: competitorsData?.num_ranked_keywords,
-                    }),
-                    topMentions: competitorsData?.top_mentions,
-                    backlinksData: {
-                      total_backlinks: competitorsData?.total_backlinks,
-                    },
-                    trustPilotStats: competitorsData?.trustpilot_stats,
-                  }}
-                />
-              </div>
-                )
-              }
+              {competitorsData && (
+                <div className="!mt-20">
+                  <StatisticsSection
+                    selectors={[
+                      "Business",
+                      ...extractCompetitorNames({
+                        num_ranked_keywords:
+                          competitorsData?.num_ranked_keywords,
+                      }),
+                    ]}
+                    data={{
+                      trafficImpressionsData: convertForLineChart({
+                        traffic_stats: competitorsData?.traffic_stats,
+                      }),
+                      keywordsRankingStatsData: transformToKeywordsRankingStats(
+                        {
+                          num_ranked_keywords:
+                            competitorsData?.num_ranked_keywords,
+                        }
+                      ),
+                      topMentions: competitorsData?.top_mentions,
+                      backlinksData: {
+                        total_backlinks: competitorsData?.total_backlinks,
+                      },
+                      trustPilotStats: competitorsData?.trustpilot_stats,
+                    }}
+                  />
+                </div>
+              )}
             </>
           ) : businessResponse ? (
             <CompetitorInsightsCard
@@ -292,9 +298,10 @@ function App() {
               handleSubmit={handleSubmit}
               formData={formData}
               isLoading={isLoading}
+              isInsightsAvailable={isInsightsAvailable}
             />
           ) : null}
-           <div
+          <div
             style={{
               background:
                 "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #060809 100%)",
@@ -303,7 +310,7 @@ function App() {
           />
           <div
             id="video"
-            className="w-full h-[250px] sm:h-[380px] md:h-[549px]"
+            className="w-full !mt-14 h-[250px] sm:h-[380px] md:h-[549px]"
           >
             <iframe
               width="100%"
@@ -322,15 +329,15 @@ function App() {
             <CtaCardsSection businessResponse={businessResponse} />
           </div>
           <HowItWorks />
-          
         </div>
       </div>
       <CommunityCta
-            submitWaitlist={submitWaitlist}
-            waitlistForm={waitlistForm}
-            handleChangeWaitlist={handleChangeWaitlist}
-            isLoading={isLoading}
-          />
+        submitWaitlist={submitWaitlist}
+        waitlistForm={waitlistForm}
+        handleChangeWaitlist={handleChangeWaitlist}
+        isLoading={isLoading}
+      />
+      {/* <Footer /> */}
     </div>
   );
 }

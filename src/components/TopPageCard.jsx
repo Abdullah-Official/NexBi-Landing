@@ -40,12 +40,12 @@ const TopPageCard = ({ data: pageData, selectorType, isCompetitors }) => {
               ? `Top Page by ${selectorType}`
               : topMentions
               ? `Top Mentions (${selectorType})`
-              : `Trust Pilot Stats (${selectorType})`}
+              : `Trustpilot (${selectorType})`}
           </h2>
           {
             ["keywords", "traffic"].includes(selectorType) ? (
               <div>
-            <Tooltip anchorSelect=".top_page_by_kw_trf" place="top-end">
+            <Tooltip anchorSelect=".top_page_by_kw_trf" place="top-end" style={{zIndex:9999, width:240}}>
               Top pages of your website with the highest number of keywords or
               with the most traffic.
             </Tooltip>

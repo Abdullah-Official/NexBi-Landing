@@ -15,14 +15,16 @@ const Word = ({value}) => {
         className='text-[20px] text-white p-6 max-w-xl'
         style={{
             opacity: scrollYProgress,
-            whiteSpace: "pre-line"
+            whiteSpace: "pre-line",
+            fontFamily:"Manrope",
+            fontWeight: 450
         }}
     >
         {
            words.map((word,i) => {
             const start = i / words.length;
             const end = start + (1/words.length);
-            return <ActualWord key={i} range={[start,end]} progress={scrollYProgress} > {word} </ActualWord>
+            return <ActualWord key={i} range={[start,end]} progress={scrollYProgress} >{word}</ActualWord>
            })
         }
     </p>

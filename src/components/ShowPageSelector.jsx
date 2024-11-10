@@ -1,4 +1,5 @@
 const ShowPageSelector = ({ selectorType, setSelectorType, selectors }) => {
+  console.log(selectorType, " SELECTOR")
   return (
     <div className="py-[0.3px] backdrop-blur-[100px] rounded-[36px] shadow-md border border-transparent bg-gradient-to-br from-[rgba(255,255,255,0.1)] via-[rgba(255,255,255,0.05)] to-[rgba(255,255,255,0.03)]">
       <div
@@ -23,7 +24,12 @@ const ShowPageSelector = ({ selectorType, setSelectorType, selectors }) => {
           >
             <h4 className="text-[#FFFF] font-[500] capitalize text-md">{v}</h4>
             <p className="text-[#eeececbf] font-[400] text-sm">
-              Some subheading of this label
+              {
+                v?.toLowerCase() ===  "traffic" ?  "Show top pages by traffic." : 
+                v?.toLowerCase() === "keywords" ? "Show top pages by keywords." :
+                v?.toLowerCase() === "business" ? "Visualize different stats about your business" :
+                "Visualize different stats about your competitor"
+            }
             </p>
           </button>
             ))
