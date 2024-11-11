@@ -1,24 +1,31 @@
 import { useState, useEffect } from "react";
-import Step1Img from "../assets/step1_img.png";
 import { IoPlayOutline } from "react-icons/io5";
 import CustomModal from "./CustomModal";
+import AiAgentImg from "../assets/ai_agent_img.svg"
+import SetGoalsImg from "../assets/set_goals_img.svg"
+import IntegrateBusinessImg from "../assets/integrate_business_img.svg"
+import AskImg from "../assets/ask_img.svg"
+import IdentifyOpporImg from "../assets/identify_oppor_img.svg"
 
 const steps = [
   {
     title: "Integrate your business data",
     description:
       "Power up the business intelligence engine by connecting all your data sources seamlessly with a click.",
-  },
-  { title: "Set your goals", description: "Define what you want to achieve." },
+    img: IntegrateBusinessImg
+    },
+  { title: "Set your goals", description: "Define what you want to achieve.", img: SetGoalsImg },
   {
     title: "We identify opportunities for you",
     description: "Our AI finds growth opportunities.",
+    img: IdentifyOpporImg
   },
   {
     title: "AI agents carry out the tasks",
     description: "Automated execution of tasks.",
+    img: AiAgentImg
   },
-  { title: "Ask whatever you want!", description: "Get insights on-demand." },
+  { title: "Ask whatever you want!", description: "Get insights on-demand.", img: AskImg },
 ];
 
 const HowItWorks = () => {
@@ -114,8 +121,8 @@ const HowItWorks = () => {
           <div className="flex-1 flex justify-center items-center">
             <img
               alt="steps_illustration"
-              src={Step1Img}
-              className="object-contain"
+              src={steps[currentStep]?.img}
+              className="object-cover"
             />
           </div>
         </div>

@@ -1,6 +1,12 @@
 import { FaPlus } from "react-icons/fa";
-import { FiLink } from "react-icons/fi";
 import Skeleton from "react-loading-skeleton";
+import KeywordsIcon from "../assets/keywords_icon.svg"
+import OnlinePresenceIcon from "../assets/onlinepresence_icon.svg"
+import BacklinksIcon from "../assets/backlink_icon.svg"
+import OnpageSeoIcon from "../assets/onpageseo_icon.svg"
+import CollabIcon from "../assets/collaboration_icon.svg"
+import OthersIcon from "../assets/others_icon.svg"
+
 
 const ActionableSteps = ({ actionableTasks, isLoading }) => {
   return (
@@ -63,7 +69,18 @@ const ActionableSteps = ({ actionableTasks, isLoading }) => {
                 actionableTasks.map((v, i) => (
                   <div className="max-w-[300px] flex-shrink-0" key={i}>
                     <div className="bg-[#FFFFFF0D] mb-2 w-[57px] h-[55px] flex items-center justify-center rounded-xl">
-                      <FiLink color={"#FFFFFFBF"} size={28} />
+                      {/* <FiLink color={"#FFFFFFBF"} size={28} /> */}
+                      <img 
+                        src={
+                          v?.category === "keywords" ? KeywordsIcon :
+                          v?.category === "online-presence" ? OnlinePresenceIcon :
+                          v?.category === "backlinks" ? BacklinksIcon :
+                          v?.category === "on-page-seo" ? OnpageSeoIcon :
+                          v?.category === "collaboration" ? CollabIcon :
+                          OthersIcon
+                        } 
+                        className="object-contain" 
+                      />
                     </div>
                     <p className="text-md md:text-lg text-white font-[500] mb-1">
                       {v?.title || ""}

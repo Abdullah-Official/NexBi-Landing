@@ -39,7 +39,7 @@ function App() {
     email: "",
     competitors: [{ url: "" }, { url: "" }],
     contact_us: false,
-    insights_exist: true,
+    insights_exist: false,
   });
   const [waitlistForm, setWaitlistForm] = useState({ name: "", email: "" });
 
@@ -75,19 +75,19 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!isInsightsAvailable) {
-      await getCompetitorsData();
-      return;
-    }
+    setIsLoading(true)
     const resp = await postCheckInsights({
       user_id: businessResponse?.user_id,
     });
     setIsInsightsAvailable(resp?.insights_available)
     if (resp?.insights_available) {
+      setIsInsightsAvailable(resp?.insights_available)
       await getCompetitorsData();
+      setIsLoading(false)
       return;
     } else {
       setIsInsightsAvailable(false);
+      setIsLoading(false)
       return;
     }
   };
@@ -111,6 +111,7 @@ function App() {
       toast.error("Something Went Wrong! Try again", { autoClose: "2000" });
     } finally {
       setIsLoading(false);
+      setIsInsightsAvailable(true)
     }
   };
 
@@ -120,6 +121,7 @@ function App() {
       const response = await postCompetitorData({
         user_id: businessResponse?.user_id,
         ...formData,
+        insights_exist: isInsightsAvailable ,
         competitors: formData.competitors.reduce((acc, v) => {
           if (v.url !== "") {
             acc.push({
@@ -300,7 +302,7 @@ function App() {
           ) : businessResponse ? (
             <CompetitorInsightsCard
               handleChange={handleChange}
-              handleSubmit={handleSubmit}
+              handleSubmit={!isInsightsAvailable ? getCompetitorsData : handleSubmit}
               formData={formData}
               isLoading={isLoading}
               isInsightsAvailable={isInsightsAvailable}
@@ -342,7 +344,7 @@ function App() {
         handleChangeWaitlist={handleChangeWaitlist}
         isLoading={isLoading}
       />
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
