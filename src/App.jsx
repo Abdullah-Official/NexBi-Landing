@@ -308,7 +308,7 @@ function App() {
               isInsightsAvailable={isInsightsAvailable}
             />
           ) : null}
-          <div
+          {/* <div
             style={{
               background:
                 "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #060809 100%)",
@@ -327,7 +327,7 @@ function App() {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen
             ></iframe>
-          </div>
+          </div> */}
 
           <div className="flex justify-center items-center !my-10 md:!my-20 ">
             <ParagraphSection />

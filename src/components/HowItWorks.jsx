@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { IoPlayOutline } from "react-icons/io5";
 import CustomModal from "./CustomModal";
 import AiAgentImg from "../assets/ai_agent_img.svg"
-import SetGoalsImg from "../assets/set_goals_img.svg"
+// import SetGoalsImg from "../assets/set_goals_img.svg"
 import IntegrateBusinessImg from "../assets/integrate_business_img.svg"
 import AskImg from "../assets/ask_img.svg"
 import IdentifyOpporImg from "../assets/identify_oppor_img.svg"
@@ -14,7 +14,7 @@ const steps = [
       "Power up the business intelligence engine by connecting all your data sources seamlessly with a click.",
     img: IntegrateBusinessImg
     },
-  { title: "Set your goals", description: "Define what you want to achieve.", img: SetGoalsImg },
+  { title: "Set your goals", description: "Define what you want to achieve.", img: AskImg },
   {
     title: "We identify opportunities for you",
     description: "Our AI finds growth opportunities.",
@@ -67,13 +67,13 @@ const HowItWorks = () => {
           <h1 className="text-md md:text-2xl lg:text-3xl text-center text-white font-[600] ">
             How It Works
           </h1>
-          <button
+          {/* <button
             onClick={() => setVideoModal(true)}
             className="flex gap-2 items-center shadow-md border border-[#FFFFFF14] w-fit rounded-full px-4 py-2"
           >
             <IoPlayOutline color="#f1f1f1" size={17} />
             <p className="text-[14px] text-[#f1f1f1] font-[500]">Watch Video</p>
-          </button>
+          </button> */}
         </div>
         <div className="flex flex-col md:flex-row justify-center items-start bg-[#060809] text-white">
           {/* Left Side: Steps */}
