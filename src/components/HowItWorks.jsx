@@ -117,7 +117,7 @@ const HowItWorks = () => {
             ))}
           </div>
 
-          {/* Right Side: Icons */}
+          {/* Right Side: Icons */ }
           <div className="flex-1 flex justify-center items-center">
             <img
               alt="steps_illustration"
